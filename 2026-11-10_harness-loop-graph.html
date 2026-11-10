@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>ハーネス・ループ・グラフ 早わかり</title>
+<style>
+:root{
+  --bg:#f5f6fa; --surface:#ffffff; --ink:#1b1f2b; --ink-2:#5b6274; --line:#e2e5ee;
+  --accent:#6a3fd6; --accent-soft:#efe9fc; --on:#ffffff;
+  --ok:#1e7a4c; --ok-soft:#e1f3e8; --wait:#8f5300; --wait-soft:#fcefd9; --no:#646a7a; --no-soft:#eceef3;
+  --head:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif;
+  --body:"Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14161d; --surface:#1d2029; --ink:#eef0f6; --ink-2:#a8afc0; --line:#2f3442;
+  --accent:#b39bff; --accent-soft:#2a2342; --on:#14161d;
+  --ok:#7fd6a5; --ok-soft:#1b2e25; --wait:#f2b866; --wait-soft:#34281a; --no:#a3a9b8; --no-soft:#262a34; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14161d; --surface:#1d2029; --ink:#eef0f6; --ink-2:#a8afc0; --line:#2f3442;
+  --accent:#b39bff; --accent-soft:#2a2342; --on:#14161d;
+  --ok:#7fd6a5; --ok-soft:#1b2e25; --wait:#f2b866; --wait-soft:#34281a; --no:#a3a9b8; --no-soft:#262a34; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.75}
+.page{max-width:880px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+h1,h2,h3{font-family:var(--head);font-weight:800;text-wrap:balance;line-height:1.35;margin:0}
+h1{font-size:34px}
+.sub{color:var(--ink-2);margin:6px 0 0}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.toc a{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:999px;padding:2px 10px}
+.toc a:hover,.toc a:focus-visible{background:var(--accent-soft)}
+.part{display:flex;align-items:baseline;gap:12px;margin:44px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--ink);min-width:0}
+.part .no{font-family:var(--head);font-size:15px;font-weight:800;color:var(--on);background:var(--accent);border-radius:999px;padding:2px 12px;white-space:nowrap;flex:0 0 auto}
+.part h2{font-size:24px;min-width:0}
+.items,.facts,.copies{display:grid;gap:18px}
+.item,.fact,.copybox{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:0;max-width:100%}
+.item .txt,.fact .txt{padding:12px 16px 14px;display:grid;gap:4px;min-width:0}
+.fact .txt{padding:14px 16px}
+.item h3,.fact h3,.copybox .bar b{font-size:19px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0}
+.fact h3{margin-bottom:6px}
+.row{display:grid;grid-template-columns:6.5em 1fr;gap:8px;align-items:baseline;min-width:0}
+.row b{font-size:13px;color:var(--ink-2);font-weight:700;letter-spacing:.04em}
+.row span{min-width:0;overflow-wrap:anywhere}
+.chip{font-size:12px;font-weight:700;border-radius:999px;padding:1px 10px;white-space:nowrap}
+.c-ok{background:var(--ok-soft);color:var(--ok)} .c-wait{background:var(--wait-soft);color:var(--wait)} .c-no{background:var(--no-soft);color:var(--no)}
+.fact ul,.item ul{margin:0;padding-left:1.2em}.fact li,.item li{margin:3px 0;overflow-wrap:anywhere}
+.fact a,.item a,.foot a,.copybox a{color:var(--accent);overflow-wrap:anywhere;word-break:break-word}
+.cmpwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;max-width:100%}
+.cmp{border-collapse:collapse;width:100%;min-width:0;font-variant-numeric:tabular-nums}
+.cmp th,.cmp td{padding:12px 10px;text-align:left;border-bottom:1px dashed var(--line);vertical-align:top;overflow-wrap:anywhere}
+.cmp thead th{font-size:14px;font-weight:700;color:var(--ink)}
+.cmp tbody th{font-size:14px;font-weight:700;width:8em}
+.cmp td{font-size:15px}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:0}
+.steps{display:grid;grid-template-columns:1fr;gap:8px;align-items:stretch;margin-top:8px}
+.step{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);min-width:0}
+.step b{display:block;font-family:var(--head);font-size:17px}
+.step span{color:var(--ink-2);font-size:14px}
+.step.go{border-color:var(--accent);background:var(--accent-soft)}
+.foot{margin-top:36px;color:var(--ink-2);font-size:13px;overflow-wrap:anywhere}
+.copybox .bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--accent-soft);min-width:0}
+.copybox .bar b{font-size:15px;font-weight:800;font-family:var(--head)}
+.copybtn{font:inherit;font-size:13px;font-weight:700;color:var(--on);background:var(--accent);border:0;border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.copybtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.copybox pre{margin:0;padding:12px 16px;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:13px;line-height:1.6;max-width:100%;overflow-x:hidden;font-family:ui-monospace,"SFMono-Regular","Menlo",monospace}
+.warn{background:var(--wait-soft);border:1px solid var(--line);border-radius:16px;padding:12px 16px;min-width:0}
+.warn b{display:block;font-family:var(--head);margin-bottom:4px}
+@media (max-width:600px){
+  h1{font-size:27px}
+  .part h2{font-size:20px}
+  .row{grid-template-columns:1fr;gap:0}
+  .cmp tbody th{width:auto;white-space:normal}
+  .cmp th,.cmp td{padding:10px 8px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>ハーネス・ループ・グラフ 早わかり</h1>
+<p class="sub">3つの手法の中身、向き不向き、使える場面、そしてそのまま貼れる文を、1ページにまとめます。</p>
+<nav class="toc" aria-label="目次">
+  <a href="#ketsuron">結論</a>
+  <a href="#harness">ハーネス</a>
+  <a href="#loop">ループ</a>
+  <a href="#graph">グラフ</a>
+  <a href="#sources">記事と数字</a>
+  <a href="#copy">コピーして使う</a>
+</nav>
+
+<div class="part" id="ketsuron"><span class="no">1</span><h2>結論</h2></div>
+<p class="sub">3つとも「指示文の書き方」ではなく、「AIが働く仕組み」の作り方です。</p>
+
+<div class="items">
+<article class="item">
+  <div class="txt">
+    <h3>いま効くのはハーネス <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>1体のAIの作業場と安全柵を整えます。守らせたいことは文章ではなく、フックやテストで機械的に止めます。</span></div>
+    <div class="row"><b>実務では</b><span>日々のAI作業は、すでに3つすべての実例になり得ます。まず CLAUDE.md を短くするところからで足ります。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>名前の流行より、止め方と証拠を見る <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>完了を機械で判定できるか、外の証拠で確かめているかを見ます。定義はまだ固まっていません。</span></div>
+    <div class="row"><b>実務では</b><span>グラフエンジニアリングは、2026年7月の冗談まじりの投稿から広まった言葉です。中身は昔からある処理の流れ図の設計です。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>「精度18%・費用85%削減」は事実ではない <span class="chip c-no">不要</span></h3>
+    <div class="row"><b>できること</b><span>「Microsoft・Stanford・Anthropic が同時に採用し、精度18%向上・費用85%削減」という話は、Turing Post が事実ではないと否定しています。</span></div>
+    <div class="row"><b>実務では</b><span>その数字は工業図面に関する別の論文のものでした。この話を根拠にはしません。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="facts" style="margin-top:18px">
+<section class="fact">
+  <div class="txt">
+    <h3>5つの層の位置づけ</h3>
+    <p class="sub" style="margin:0 0 8px">下の層を置きかえるのではなく、積み重なります。多くの記事で共通する整理です（技術ブログの codecentric、DevelopersIO、サーバーワークス、論文サイト arXiv の2本）。</p>
+    <div class="cmpwrap"><table class="cmp two">
+      <thead><tr><th>層</th><th>ひとことで</th></tr></thead>
+      <tbody>
+        <tr><th>プロンプト</th><td>1回の指示文をどう書くか</td></tr>
+        <tr><th>コンテキスト</th><td>AIに毎回何を見せるか（資料、記憶、道具の説明）</td></tr>
+        <tr><th>ハーネス</th><td>1体のAIが働く環境（道具、権限、検査、記録）をどう作るか</td></tr>
+        <tr><th>ループ</th><td>AIを誰が・いつ・何回動かし、いつ止めるか</td></tr>
+        <tr><th>グラフ</th><td>複数のAI・コード・人の承認をどうつなぐか</td></tr>
+      </tbody>
+    </table></div>
+    <ul style="margin-top:10px">
+      <li>ハーネスの位置は人によって違います。「ループより下の土台」とする整理と、「モデル以外の全部」とする広い使い方があります。</li>
+      <li>ループという言葉も、Claude Code チーム自身が「Xで聞くと答えがいくつも出てくる」と認めています。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>おすすめの順番</h3>
+    <div class="steps">
+      <div class="step go"><b>① ハーネスを固める</b><span>CLAUDE.md を目次型で短くし、守らせたいことはフックとテストで止めます。</span></div>
+      <div class="step"><b>② 完了条件が書ける作業だけループにする</b><span>/loop や /schedule は、人がその場で手で始めてください。定期の自動実行からは呼ばないでください。</span></div>
+      <div class="step"><b>③ グラフは必要になってから</b><span>承認や並列の作業が本当にあるときだけ使います。無ければ1本のループで十分です。</span></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="part" id="harness"><span class="no">2</span><h2>ハーネスエンジニアリング</h2></div>
+<p class="sub">1体のAIの作業場と安全柵を作る考え方です。</p>
+
+<div class="items">
+<article class="item">
+  <div class="txt">
+    <h3>定義 <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>AIがミスをしたら、二度と同じミスをしないよう仕組みを作ります。手段は、決まりを1行足すことと、検査や画面取得などの道具を作ることです。</span></div>
+    <div class="row"><b>ほかとの違い</b><span>ハーネスは1体のAIの作業場、ループはその作業場を繰り返し動かす仕組み、グラフは作業場をいくつもつなぐ配線です。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>言葉の出どころ</h3>
+    <div class="row"><b>できること</b><span>Mitchell Hashimoto 氏が2026-02-05の個人ブログで、「業界で決まった名前がまだ無いので自分はこう呼んでいる」として使い始めました。</span></div>
+    <div class="row"><b>公式の例</b><span>OpenAI の公式記事（2026-02-11）は、人がコードを1行も書かずに約100万行・約1,500件のプルリクエストを5か月で作った実験を、この名前で呼んでいます。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="facts" style="margin-top:18px">
+<section class="fact">
+  <div class="txt">
+    <h3>良いところ</h3>
+    <ul>
+      <li>一度作ると以後の全セッションに効きます（個人ブログ、逆瀬川ちゃんのブログは「複利で効く」と表現）。</li>
+      <li>「お願い」ではなく機械で止めるので、長い作業の途中で指示を忘れても守られます。</li>
+      <li>同じモデルでも結果が大きく変わる、という報告が多くあります。ただし数値の根拠は記事ごとにまちまちです。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>向かないところ</h3>
+    <ul>
+      <li>作る手間がかかります。技術記事サイト Zenn のA/Bテストでは、ハーネスありの実装は行数が約3倍に増えました。</li>
+      <li>「指示の誤解」や「不要な機能の追加」は、どの検査でも確実には捕まえられません（エンジニア記事、martinfowler.com）。</li>
+      <li>モデルが賢くなると不要になる部分がある、という見方もあります（逆瀬川ちゃんのブログ）。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>使える場面のパターン</h3>
+    <ul>
+      <li>同じ注意を何度もしているときは、決まりに1行足します。それでも破られたら手順書（スキル）へ、さらに破られたらフックで止めます。</li>
+      <li>削除コマンドや秘密ファイルの編集は、実行前のフックで止めます。</li>
+      <li>「できました」と言うのにできていないときは、テストが通るまで終わらせないフックを付けます。</li>
+      <li>長い作業の続きが分からなくなったら、進捗ファイルと git の履歴で引き継ぎます（公式技術記事、Anthropic）。</li>
+      <li>例: 設定ファイルを生成させるとき、構文チェックを編集のたびに走らせ、エラー文をAIに返して直させます。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>ベストプラクティス</h3>
+    <ul>
+      <li>CLAUDE.md や AGENTS.md は目次にして短く保ちます。目安は OpenAI が約100行、逆瀬川氏は50行以下です。</li>
+      <li>守らせたいことは文章ではなく、リンター、型チェック、テスト、フックで機械的に止めます。</li>
+      <li>自作チェックのエラー文には直し方を書きます（公式記事、OpenAI の手法）。</li>
+      <li>リンター設定やテストをAIに書きかえさせません。設定ファイルの編集はフックで禁じます。</li>
+      <li>速い検査ほど手前に置きます（編集直後、コミット前、CI、人のレビューの順）。</li>
+      <li>作業開始時の手順を固定します。進捗の一覧は、Markdown より JSON の方が勝手に書きかえられにくいです（公式技術記事、Anthropic）。</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<div class="items" style="margin-top:18px">
+<article class="item">
+  <div class="txt">
+    <h3>何に役立つか <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>設定変更を「AIが案を出す、機械が構文と方針を検査する、人が承認する」形にできます。本番への直接適用はフックで止められます。</span></div>
+    <div class="row"><b>実務では</b><span>「AIの出力を機械で検査する仕組みを作った」は、プロンプトの工夫より説明しやすい成果です。決まりを文章で増やすより、型チェックのように機械で確かめられる形を増やすのが効きます。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="part" id="loop"><span class="no">3</span><h2>ループエンジニアリング</h2></div>
+<p class="sub">1体のAIを、誰が・いつ・何回動かし、いつ止めるかを仕組みにする考え方です。</p>
+
+<div class="warn">
+  <b>先に守ること</b>
+  /loop や /schedule は、人がその場で手で始めてください。定期の自動実行から Claude Code を呼ぶことはしないでください。技術ブログ DevelopersIO は、<code>claude -p</code> や Agent SDK が別枠の課金になる場合があると書いています。
+</div>
+
+<div class="items" style="margin-top:18px">
+<article class="item">
+  <div class="txt">
+    <h3>定義 <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>AIに指示を打つ役を、人からシステムに置きかえます。止める条件を満たすまで作業を繰り返します。</span></div>
+    <div class="row"><b>ほかとの違い</b><span>ハーネスは1回の作業の環境、ループはその作業を時間をまたいで繰り返し起動する仕組みです。ループは基本的に1本の流れ、グラフは複数をつなぐ構造です。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>言葉の出どころ</h3>
+    <div class="row"><b>できること</b><span>Addy Osmani 氏のブログ（2026-06-08付。ニュースレター Turing Post は6月7日と記載）が名付け元です。定義は「エージェントにプロンプトを打つ役を、自分からシステムに置きかえること」です。</span></div>
+    <div class="row"><b>公式の整理</b><span>Claude Code チームは4種類に分けています。人が毎回確かめる型、完了条件を渡す型（/goal）、時間で起動する型（/loop、/schedule）、イベントで自動起動する型です。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="facts" style="margin-top:18px">
+<section class="fact">
+  <div class="txt">
+    <h3>良いところ</h3>
+    <ul>
+      <li>人が張り付かなくても、テストが通るまで直し続けるような作業を任せられます。</li>
+      <li>朝の振り分けや依存関係の更新など、決まった繰り返し作業に向きます。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>向かないところ</h3>
+    <ul>
+      <li>トークン消費が増えます。DevelopersIO は、Anthropic の実測として「エージェントはチャットの約4倍、複数エージェントは約15倍」を紹介しています。</li>
+      <li>「読みやすくして」など、機械で判定できる完了条件が書けない作業は、「できました」を繰り返すだけになりがちです。</li>
+      <li>AIがテストを消して通そうとするなどの不正が起きます。</li>
+      <li>ループが速く進むほど、人が中身を理解しないまま変更が増えます（Osmani 氏のブログ、IBM の解説）。</li>
+      <li>「名前を変えた定期実行にすぎない」という批判も、論文サイト arXiv の論文で紹介されています。同論文は「効果の体系的な証拠はまだ無い」とも書いています。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>使える場面のパターン</h3>
+    <ul>
+      <li>テストが通るまで直す。<code>/goal ./test.sh が exit 0 で終わる。5ターンでだめなら停止</code>（DevelopersIO の例）。</li>
+      <li>終わる前に検査する門を付ける。Stop フックでテストを走らせ、失敗なら終わらせません。</li>
+      <li>定期の見回り。<code>/loop 5m 自分のPRを確認し、レビューに対応し、CIの失敗を直す</code>（公式記事、Claude by Anthropic の例）。これは人が手で始めます。</li>
+      <li>作る係とチェックする係を分け、編集権限の無い検証役に PASS か NEEDS_WORK を返させます。</li>
+      <li>例: 問題集アプリの問題データを、形式チェックのスクリプトが全件通るまで直させます。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>ベストプラクティス</h3>
+    <ul>
+      <li>止める条件を、コマンドの終了コードや数値で書きます（「テストが全部通る」「スコア90以上」）。</li>
+      <li>必ず上限とセットにします（回数、費用、時間）。上限に届いたら人に知らせて止めます。</li>
+      <li>進まないときの停止も入れます。John Young 氏のブログは「3回続けて変化が無ければ止める」を出発点として挙げています。本人の経験値で、研究結果ではありません。</li>
+      <li>判定はAIの自己申告ではなく、外のスクリプトで行います。テストファイルはAIが書きかえられないようにします。</li>
+      <li>状態はファイルに残します。「AIは忘れるが、リポジトリは忘れない」（Osmani 氏）。</li>
+      <li>push、デプロイ、外部送信は人の承認を必須にします。無人のループは別ブランチや別の作業場所で動かします。</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<div class="items" style="margin-top:18px">
+<article class="item">
+  <div class="txt">
+    <h3>何に役立つか <span class="chip c-ok">使える</span></h3>
+    <div class="row"><b>できること</b><span>「設定案を作る、検証環境で動作確認、失敗なら直す」を、上限付きで自動で回す形が作れます。</span></div>
+    <div class="row"><b>実務では</b><span>定期の作業や Issue の往復は、すでにループです。足りていない点を確かめる価値があるのは、成果物の機械チェックと、失敗時に止めて人へ回す地点です。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>定期の自動実行から Claude Code を呼ぶこと <span class="chip c-no">不要</span></h3>
+    <div class="row"><b>できること</b><span>サブスクをボットやスクリプトで使うことを、提供元の規約が禁じている場合があります。定期の自動実行から Claude Code を呼ばないでください。</span></div>
+    <div class="row"><b>実務では</b><span>/loop や /schedule を使う場合も、人が手で始める範囲にとどめてください。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="part" id="graph"><span class="no">4</span><h2>グラフエンジニアリング</h2></div>
+<p class="sub">複数のAI、普通のコード、人の承認を、箱とつなぎで設計する考え方です。3つのなかで、定義が最も不確かです。</p>
+
+<div class="items">
+<article class="item">
+  <div class="txt">
+    <h3>定義はまだ揺れています <span class="chip c-wait">あとで</span></h3>
+    <div class="row"><b>できること</b><span>作業の単位（AI、普通のコード、人の承認）、次に何をするか、引き継ぐ情報で、処理をつなぎます。</span></div>
+    <div class="row"><b>ほかとの違い</b><span>「ループはグラフの簡易版」（公式ブログ、LangChain）、「グラフはループを含む」（Louis Bouchard 氏のブログ）という整理です。対立ではなく、含む関係です。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>言葉の出どころは冗談まじりでした</h3>
+    <div class="row"><b>できること</b><span>2026-07-18に Peter Steinberger 氏が「まだループの話をしてる？それとももうグラフに移った？」と投稿しました。数時間後、Hamel Husain 氏が「Loop Engineering Is Dead. Enter Graph Engineering」という題の記事を出しましたが、本文はほぼ空（「.」のみ）でした。</span></div>
+    <div class="row"><b>新しさ</b><span>Learn Harness Engineering 講座は「2人とも冗談だった」と書いています。LangChain の公式ブログは「新しい考えではない。確立された手法の最新の名前だ」と書いています。LangGraph は2024年からこのモデルを実装しています。</span></div>
+  </div>
+</article>
+<article class="item">
+  <div class="txt">
+    <h3>知識グラフ（GraphRAG）とは別物です <span class="chip c-no">不要</span></h3>
+    <div class="row"><b>できること</b><span>ここで言うグラフは、処理の流れ図の設計です。知識をグラフでつなぐ手法（GraphRAG）とは別物です（Turing Post、サーバーワークス）。</span></div>
+    <div class="row"><b>実務では</b><span>名前だけ見て知識グラフの道具を足す必要はありません。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="facts" style="margin-top:18px">
+<section class="fact">
+  <div class="txt">
+    <h3>良いところ</h3>
+    <ul>
+      <li>並列にできる作業を同時に走らせられます。</li>
+      <li>作る係と検査する係を別の文脈に分けられ、自己採点の甘さを避けられます。</li>
+      <li>途中の状態を保存すれば、失敗した地点から再開できます。</li>
+      <li>「どこで失敗したか」を後から追いやすくなります。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>向かないところ</h3>
+    <ul>
+      <li>1つの作業で済むものには過剰です。Turing Post は「ほとんどのエージェントはまだグラフを必要としない」と書いています。</li>
+      <li>箱を増やすほど、状態管理、デバッグ、費用が増えます。</li>
+      <li>AI同士で確認し合うだけだと、「全部整合しているが何も検証されていない」状態になります（Carlos Perez 氏の指摘、NEC の解説で紹介）。</li>
+      <li>人のレビュー時間は並列化できません（Osmani 氏の「オーケストレーション税」）。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>使える場面のパターン</h3>
+    <ul>
+      <li>ダイヤモンド型: 調査をいくつかの観点に分けて同時に走らせ、それぞれを検査役が確かめ、最後に1つにまとめます。</li>
+      <li>振り分け: 簡単な依頼は安いモデル、難しい依頼は強いモデル、判断できないものは人へ回します。</li>
+      <li>承認の地点: 返金や本番変更など、取り消せない操作の前で止めて、人の承認を待ちます。</li>
+      <li>例: 複数の係が分かれている作業は、それ自体がグラフです。「必要な印がそろったら次の係が動く」は、承認の地点を持つつなぎです。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>ベストプラクティス</h3>
+    <ul>
+      <li>先に「決まった段階、承認、並列の作業、段階ごとに違う道具」があるかを確かめます。無ければ1本のループで十分です（ガイド、Bigcircle）。</li>
+      <li>各箱の入力と出力の形を決めます。自由文ではなく型にします。</li>
+      <li>検査役には作業役の会話を見せず、成果物と証拠だけを渡します。</li>
+      <li>外の証拠に必ずつなぎます（実際に走ったテスト、実際の数値、人の確認）。</li>
+      <li>権限チェックや承認は、プロンプトではなくコードやツールの側に置きます。</li>
+      <li>並列の幅と費用に上限を付けます。合流するときは「何件返ってきたか」を数え、欠けを見逃しません。</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<div class="items" style="margin-top:18px">
+<article class="item">
+  <div class="txt">
+    <h3>何に役立つか <span class="chip c-wait">あとで</span></h3>
+    <div class="row"><b>できること</b><span>障害調査を「ログ解析・再現・設定確認を並列、結果を合流、修正案、人の承認、適用」という流れ図にする発想は、普段の手順書づくりと同じです。</span></div>
+    <div class="row"><b>実務では</b><span>今の作業の流れを箱とつなぎで書き出すと、「誰がどの成果物を誰に渡すか」「どこで外の証拠と照合するか」の抜けが見つかります。担当同士の確認だけで終わっている箇所が要注意です。</span></div>
+  </div>
+</article>
+</div>
+
+<div class="part" id="sources"><span class="no">5</span><h2>記事、発信者、OSS、バズった投稿</h2></div>
+<p class="sub">数字とURLは、調査ファイルが2026-11-10（日本時間）に開いて確かめたものだけです。</p>
+
+<div class="facts">
+<section class="fact">
+  <div class="txt">
+    <h3>参考記事（日本語）</h3>
+    <ul>
+      <li><a href="https://nyosegawa.com/posts/harness-engineering-best-practices-2026/" target="_blank" rel="noopener">Claude Code / Codex ユーザーのための誰でもわかるHarness Engineeringベストプラクティス</a>（個人ブログ、逆瀬川ちゃんのブログ）。フックや CLAUDE.md の具体例が最も充実しています。</li>
+      <li><a href="https://zenn.dev/charge0315/articles/912c18631eb8c0" target="_blank" rel="noopener">Claude Code のハーネスエンジニアリング ～6層モデル～</a>（技術記事サイト、Zenn）。ルールを「お願い、手順、仕組み」の順に格上げする方法です。</li>
+      <li><a href="https://zenn.dev/sasadango28/articles/claude-code-harness-engineering-20260415" target="_blank" rel="noopener">Claude Codeでハーネスエンジニアリングを実践する — 5層の設計パターン</a>（技術記事サイト、Zenn）。</li>
+      <li><a href="https://zenn.dev/yohei_data/articles/3900a223fe9378" target="_blank" rel="noopener">Claude Codeハーネスエンジニアリングを最小構成でA/Bテストしてみた</a>（技術記事サイト、Zenn）。効果が行数約3倍という代償かを検証しています。</li>
+      <li><a href="https://dev.classmethod.jp/articles/loop-engineering-claude-code-autonomous/" target="_blank" rel="noopener">ループエンジニアリング — Claude Code で自律ループを作ってみる</a>（技術ブログ、DevelopersIO）。Stop フックの実演があります。</li>
+      <li><a href="https://dev.classmethod.jp/articles/claude-loop-engineering-practice/" target="_blank" rel="noopener">Loop EngineeringをClaudeを使って実践してみた。</a>（技術ブログ、DevelopersIO）。</li>
+      <li><a href="https://www.ibm.com/jp-ja/think/topics/loop-engineering" target="_blank" rel="noopener">ループ・エンジニアリングとは</a>（企業の解説ページ、IBM）。</li>
+      <li><a href="https://blog.serverworks.co.jp/what-is-graph-engineering" target="_blank" rel="noopener">「グラフエンジニアリング」とは何か？</a>（企業エンジニアブログ、サーバーワークス）。</li>
+      <li><a href="https://note.com/nec_ilab/n/n15800fb671b5" target="_blank" rel="noopener">Graph Engineering とは — Loop Engineering の次に来た「エージェントの配線図」</a>（note の記事、NEC イノベーションラボラトリ）。</li>
+      <li><a href="https://code.claude.com/docs/ja/hooks" target="_blank" rel="noopener">Hooks リファレンス</a>（公式ドキュメント、Claude Code Docs 日本語版）。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>参考記事（英語・公式）</h3>
+    <ul>
+      <li><a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener">Harness engineering: leveraging Codex in an agent-first world</a>（公式記事、OpenAI）。</li>
+      <li><a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Effective harnesses for long-running agents</a>（公式技術記事、Anthropic）。</li>
+      <li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective context engineering for AI agents</a>（公式技術記事、Anthropic）。</li>
+      <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective AI agents</a>（公式技術記事、Anthropic）。直列・振り分け・並列などの5つの型の原典としてよく引用されます。</li>
+      <li><a href="https://claude.com/resources/articles/getting-started-with-loops" target="_blank" rel="noopener">Loop engineering: Getting started with loops</a>（公式記事、Claude by Anthropic）。</li>
+      <li><a href="https://developers.googleblog.com/the-anatomy-of-harness-engineering-how-to-evaluate-iterate-and-guard-ai-coding-agents/" target="_blank" rel="noopener">The Anatomy of Harness Engineering</a>（公式ブログ、Google Developers Blog）。</li>
+      <li><a href="https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph" target="_blank" rel="noopener">3 Years of Graph Engineering with LangGraph</a>（公式ブログ、LangChain）。</li>
+      <li><a href="https://www.deeplearning.ai/courses/loop-engineering-with-langchain-deep-agents" target="_blank" rel="noopener">Loop Engineering with LangChain Deep Agents</a>（オンライン講座、DeepLearning.AI）。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>参考記事（英語・エンジニア）</h3>
+    <ul>
+      <li><a href="https://mitchellh.com/writing/my-ai-adoption-journey" target="_blank" rel="noopener">My AI Adoption Journey</a>（個人ブログ、Mitchell Hashimoto）。呼び方の出どころです。</li>
+      <li><a href="https://www.martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener">Harness engineering for coding agent users</a>（エンジニア記事、martinfowler.com / Birgitta Böckeler 執筆）。</li>
+      <li><a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener">Loop Engineering</a>（ニュースレター、Addy Osmani / Elevate）。名付け元です。</li>
+      <li><a href="https://www.codecentric.de/en/knowledge-hub/blog/loop-harness-context-engineering-explained" target="_blank" rel="noopener">Loop, Harness, Context Engineering: The Terms Explained</a>（企業ブログ、codecentric）。</li>
+      <li><a href="https://ghuntley.com/ralph/" target="_blank" rel="noopener">Ralph Wiggum as a "software engineer"</a>（個人ブログ、Geoffrey Huntley）。同じ指示を繰り返し流す、最も原始的なループです（2025年7月）。</li>
+      <li><a href="https://www.turingpost.com/p/is-graph-engineering-real-why-everyone-is-talking-about-it" target="_blank" rel="noopener">FOD#159: Is Graph Engineering Real?</a>（ニュースレター、Turing Post）。経緯と誤情報の否定があります。</li>
+      <li><a href="https://www.louisbouchard.ai/graph-engineering-explained/" target="_blank" rel="noopener">Graph Engineering vs Loop Engineering: What Actually Changed</a>（個人ブログ、Louis Bouchard）。</li>
+      <li><a href="https://walkinglabs.github.io/learn-harness-engineering/en/lectures/lecture-14-graph-engineering/" target="_blank" rel="noopener">Lecture 14. From Single Loops to Graph Engineering</a>（公開講座、Learn Harness Engineering）。</li>
+      <li><a href="https://jyoung.dev/blog/loop-engineering-practical-guide/" target="_blank" rel="noopener">Loop Engineering Examples: Harden One Loop, Control by Control</a>（個人ブログ、John Young）。</li>
+      <li><a href="https://bigcircle.ai/guides/graph-engineering" target="_blank" rel="noopener">Graph engineering: how to design agent graphs that hold up in production</a>（ガイド記事、Bigcircle）。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>論文</h3>
+    <ul>
+      <li><a href="https://arxiv.org/abs/2608.21884" target="_blank" rel="noopener">Loop Engineering: Building Blocks, Adoption, and Impact</a>（論文サイト、arXiv）。36,710件のリポジトリを調べ、自律ループは217件で確認。効果の証拠はまだ無いと結論しています。</li>
+      <li><a href="https://arxiv.org/abs/2608.21156" target="_blank" rel="noopener">Graph Engineering in the Era of LLM Agents</a>（論文サイト、arXiv）。グラフエンジニアリングを体系化した調査論文です。</li>
+      <li><a href="https://arxiv.org/abs/2606.20683" target="_blank" rel="noopener">From Question Answering to Task Completion: A Survey on Agent System and Harness Design</a>（論文サイト、arXiv）。ハーネスを6つの役割に分解した調査論文です。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>X の発信者</h3>
+    <ul>
+      <li><a href="https://x.com/steipete" target="_blank" rel="noopener">Peter Steinberger（@steipete）</a>（X のアカウント）。ループとグラフ、両方の流行のきっかけになった投稿をした人です。</li>
+      <li><a href="https://x.com/bcherny" target="_blank" rel="noopener">Boris Cherny（@bcherny）</a>（X のアカウント）。Claude Code の生みの親。「ループを書くのが仕事」発言の主です。元動画は未視聴です（未確認）。</li>
+      <li><a href="https://x.com/addyosmani" target="_blank" rel="noopener">Addy Osmani（@addyosmani）</a>（X のアカウント）。「ループエンジニアリング」の名付け元です。</li>
+      <li><a href="https://x.com/mitchellh" target="_blank" rel="noopener">Mitchell Hashimoto（@mitchellh）</a>（X のアカウント）。「ハーネスエンジニアリング」の呼び方の出どころです。</li>
+      <li><a href="https://x.com/HamelHusain" target="_blank" rel="noopener">Hamel Husain（@HamelHusain）</a>（X のアカウント）。評価の専門家。「Loop Engineering Is Dead」記事の主です。</li>
+      <li><a href="https://x.com/hwchase17" target="_blank" rel="noopener">Harrison Chase（@hwchase17）</a>（X のアカウント）。LangChain の創業者です。</li>
+      <li><a href="https://x.com/rohit4verse" target="_blank" rel="noopener">Rohit（@rohit4verse）</a>（X のアカウント）。4層整理のスレッドで知られます。スレッド本体は未取得です（未確認）。</li>
+      <li><a href="https://x.com/gyakuse" target="_blank" rel="noopener">逆瀬川（@gyakuse）</a>（X のアカウント）。日本語で最も詳しいハーネスのベストプラクティス記事の著者です。</li>
+      <li><a href="https://x.com/rakyll" target="_blank" rel="noopener">Jaana Dogan（@rakyll）</a>（X のアカウント）。Google の ML/AI システム担当です。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>使える OSS（スター数は2026-11-10に GitHub で取得）</h3>
+    <p class="sub" style="margin:0 0 8px">基盤（実際にエージェントを動かす道具）</p>
+    <ul>
+      <li><a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">anthropics/claude-code</a>（GitHub のリポジトリ）155,103。ターミナルで動くコーディングAI。</li>
+      <li><a href="https://github.com/openai/codex" target="_blank" rel="noopener">openai/codex</a>（GitHub のリポジトリ）134,457。OpenAI のターミナル用コーディングAI。</li>
+      <li><a href="https://github.com/crewAIInc/crewAI" target="_blank" rel="noopener">crewAIInc/crewAI</a>（GitHub のリポジトリ）60,698。役割を持つ複数エージェントを協調させる枠組み。</li>
+      <li><a href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noopener">vercel-labs/agent-browser</a>（GitHub のリポジトリ）48,543。AIがブラウザを操作して動作確認するためのCLI。</li>
+      <li><a href="https://github.com/langchain-ai/langgraph" target="_blank" rel="noopener">langchain-ai/langgraph</a>（GitHub のリポジトリ）44,716。ノードとエッジで流れを組む枠組み（グラフの代表）。</li>
+      <li><a href="https://github.com/langchain-ai/deepagents" target="_blank" rel="noopener">langchain-ai/deepagents</a>（GitHub のリポジトリ）31,153。説明文は「全部入りのエージェントハーネス」。</li>
+      <li><a href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener">openai/openai-agents-python</a>（GitHub のリポジトリ）30,587。複数エージェントの流れを組む軽量な枠組み。</li>
+      <li><a href="https://github.com/google/adk-python" target="_blank" rel="noopener">google/adk-python</a>（GitHub のリポジトリ）22,165。Google のエージェント開発キット。</li>
+      <li><a href="https://github.com/microsoft/agent-framework" target="_blank" rel="noopener">microsoft/agent-framework</a>（GitHub のリポジトリ）14,610。Microsoft の複数エージェント用の枠組み。</li>
+      <li><a href="https://github.com/anthropics/claude-agent-sdk-python" target="_blank" rel="noopener">anthropics/claude-agent-sdk-python</a>（GitHub のリポジトリ）8,508。Claude Code と同じ仕組みをコードから呼ぶSDK。</li>
+    </ul>
+    <p class="sub" style="margin:12px 0 8px">学ぶ・型を借りる（2026年に作られたもの）</p>
+    <ul>
+      <li><a href="https://github.com/walkinglabs/learn-harness-engineering" target="_blank" rel="noopener">walkinglabs/learn-harness-engineering</a>（GitHub のリポジトリ）24,072。ハーネスの入門講座。2026-03-29作成。</li>
+      <li><a href="https://github.com/cobusgreyling/loop-engineering" target="_blank" rel="noopener">cobusgreyling/loop-engineering</a>（GitHub のリポジトリ）11,741。ループの型とひな形。2026-06-09作成。</li>
+      <li><a href="https://github.com/ai-boost/awesome-harness-engineering" target="_blank" rel="noopener">ai-boost/awesome-harness-engineering</a>（GitHub のリポジトリ）5,111。ハーネス関連の一覧。</li>
+      <li><a href="https://github.com/walkinglabs/awesome-harness-engineering" target="_blank" rel="noopener">walkinglabs/awesome-harness-engineering</a>（GitHub のリポジトリ）4,672。同上の一覧。</li>
+      <li><a href="https://github.com/lopopolo/harness-engineering" target="_blank" rel="noopener">lopopolo/harness-engineering</a>（GitHub のリポジトリ）2,762。OpenAI 記事の著者の資料集。2026-07-18作成。</li>
+      <li><a href="https://github.com/QoderAI/better-harness" target="_blank" rel="noopener">QoderAI/better-harness</a>（GitHub のリポジトリ）2,442。ハーネスをコードとして定義する基盤。2026-07-21作成。</li>
+      <li><a href="https://github.com/valkor-ai/loom" target="_blank" rel="noopener">valkor-ai/loom</a>（GitHub のリポジトリ）1,456。ループエンジニアリング用の道具。</li>
+      <li><a href="https://github.com/deerwork-ai/deer-workflow" target="_blank" rel="noopener">deerwork-ai/deer-workflow</a>（GitHub のリポジトリ）556。説明文は「グラフエンジニアリングの実行基盤」。</li>
+      <li><a href="https://github.com/DEEP-JLU/Awesome-Graph-Engineering" target="_blank" rel="noopener">DEEP-JLU/Awesome-Graph-Engineering</a>（GitHub のリポジトリ）400。上記 arXiv 調査論文の資料一覧。2026-08-20作成。</li>
+    </ul>
+    <p class="sub" style="margin:12px 0 8px">最近急に伸びているものの目安（作成日からの1日平均。過去のスター推移は取れないため、調査時点の計算による目安です）</p>
+    <ul>
+      <li>vercel-labs/agent-browser 約160（2026-01-11作成）</li>
+      <li>walkinglabs/learn-harness-engineering 約107（2026-03-29作成）</li>
+      <li>cobusgreyling/loop-engineering 約76（2026-06-09作成）</li>
+      <li><a href="https://github.com/AgnesAI-Labs/agnes-harness" target="_blank" rel="noopener">AgnesAI-Labs/agnes-harness</a>（GitHub のリポジトリ）2,063、約42（2026-09-22作成）。</li>
+      <li>lopopolo/harness-engineering 約24（2026-07-18作成）</li>
+      <li>QoderAI/better-harness 約22（2026-07-21作成）</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>バズった投稿（数字は2026-11-10に X の API で取得。日付は日本時間）</h3>
+    <ul>
+      <li><a href="https://x.com/steipete/status/2063697162748260627" target="_blank" rel="noopener">Peter Steinberger「プロンプトではなくループを設計せよ」</a>（X の投稿、2026-06-08）。いいね 19,917、表示 8,702,087、ブックマーク 14,316。</li>
+      <li><a href="https://x.com/steipete/status/2078277297791189132" target="_blank" rel="noopener">Peter Steinberger「まだループ？もうグラフ？」</a>（X の投稿、2026-07-18）。いいね 7,763、表示 3,133,553、ブックマーク 2,767。</li>
+      <li><a href="https://x.com/AnatoliKopadze/status/2080668775796314331" target="_blank" rel="noopener">Anatoli Kopadze の X 記事「Graph Engineering explained」</a>（X の投稿、2026-07-24）。いいね 4,383、表示 13,509,421、ブックマーク 18,423。</li>
+      <li><a href="https://x.com/HamelHusain/status/2078346425621237935" target="_blank" rel="noopener">Hamel Husain「Loop Engineering Is Dead. Enter Graph Engineering」</a>（X の投稿、2026-07-18、本文はほぼ空）。いいね 1,731、表示 692,375。</li>
+      <li><a href="https://x.com/AnatoliKopadze/status/2097380989538591155" target="_blank" rel="noopener">Anatoli Kopadze「Googleがグラフエンジニアリングの1時間講座を公開」</a>（X の投稿、2026-09-09）。いいね 546、表示 124,345。講座が本当に Google 公式かどうかは確かめていません（未確認）。</li>
+      <li><a href="https://x.com/nakasyou0/status/2107112775155941661" target="_blank" rel="noopener">nakasyou「時代はリバースエンジニアリング」</a>（X の投稿、2026-10-05、日本語で最も反応が多かった冗談投稿）。いいね 177、表示 9,695。</li>
+    </ul>
+    <ul>
+      <li>Kopadze 氏の記事にある「Bun の書き換えに約16.5万ドル」などの数字は、調査でも確かめていないので載せていません（未確認）。</li>
+      <li>日本語の投稿は、言葉の多さへの戸惑いや冗談が中心でした。</li>
+    </ul>
+  </div>
+</section>
+<section class="fact">
+  <div class="txt">
+    <h3>確かめられなかったこと</h3>
+    <ul>
+      <li>「Googleがグラフエンジニアリングの1時間講座を公開」の元の講座が Google 公式かどうか（未確認）。</li>
+      <li>Anatoli Kopadze 氏の記事にある Bun 書き換えの費用など（未確認）。</li>
+      <li>「精度18%向上・費用85%削減」の元論文そのもの（未確認）。Turing Post と Learn Harness Engineering 講座が否定していることは確認しています。</li>
+      <li>Boris Cherny 氏の「ループを書くのが仕事」発言の元動画（未確認）。arXiv 論文の引用では確認しています。</li>
+      <li>「同じモデルでもハーネスで SWE-bench スコアが22ポイント変わる」という話の元データ（未確認）。調査本文にも入れていません。</li>
+      <li>OSS の過去のスター推移（未確認）。「最近伸びている」は作成日からの平均で代用しています。</li>
+      <li>Rohit 氏（@rohit4verse）の4層整理のスレッド本体（未確認）。講座の引用では確認しています。</li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<div class="part" id="copy"><span class="no">6</span><h2>コピーして使う</h2></div>
+<p class="sub">調査が記事の手法をもとに書いた例です。コピーして、そのまま Claude Code に貼れます。/loop や /schedule は、人が手で始めてください。</p>
+
+<div class="copies">
+
+<div class="copybox">
+  <div class="bar"><b>プロンプト1. ハーネスの点検（毎週1回）</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>このリポジトリで直近1週間に、あなた（AI）が同じ種類のミスを2回以上したものを git log と PR のコメントから探してください。
+それぞれについて、再発を防ぐ方法を「CLAUDE.md に1行足す」「スキルにする」「フックで止める」のどれにするか提案し、理由を1行で書いてください。
+まだ何も変更しないでください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>プロンプト2. 完了条件つきの作業（ループ）</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>/goal ./scripts/check_questions.sh が exit 0 で終わること。
+5回試してだめなら止めて、何が残っているかを一覧にしてください。
+check_questions.sh とテストデータは変更しないでください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>プロンプト3. 作る係とチェックする係を分ける</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>修正が終わったと思ったら、evaluator サブエージェントにレビューさせてください。
+evaluator には差分とテスト結果だけを渡し、あなたの説明は渡さないでください。
+evaluator が PASS を返すまで修正とレビューを繰り返し、3回で通らなければ止めて私に報告してください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>プロンプト4. 並列に調べて検査してまとめる（グラフ）</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>「[テーマ]」を、[観点1][観点2][観点3]の3つに分けて、別々のサブエージェントで同時に調べてください。
+どの結果にも出典URLと日付を付けてください。
+それぞれの結果を、調べた係とは別の検査役に渡し、URLが実際に開けて主張と合っているかを確かめさせてください。
+確かめられなかったものは「未確認」として分け、最後に1つの報告にまとめてください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>ベストプラクティスのチェック項目</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>【ハーネス】
+- CLAUDE.md / AGENTS.md は目次型で短く保つ（目安: 50行以下、長くても約100行）
+- 守らせたいことは文章ではなく、リンター・型チェック・テスト・フックで機械的に止める
+- 自作チェックのエラー文に「直し方」を書く
+- リンター設定やテストをAIに書きかえさせない（フックで禁止）
+- 速い検査ほど手前に置く（編集直後、コミット前、CI、人のレビューの順）
+- 作業開始時の手順を固定する（場所の確認、進捗と git ログを読む、基本動作の確認）
+- 進捗の一覧は Markdown より JSON の方が書きかえられにくい
+
+【ループ】
+- 止める条件を、コマンドの終了コードや数値で書く
+- 必ず上限とセットにする（回数、費用、時間）。上限に届いたら人に知らせて止める
+- 進まないときの停止も入れる（同じ失敗が続く、2つの状態を行き来する）
+- 判定はAIの自己申告ではなく外のスクリプトで行う
+- テストファイルはAIが書きかえられないようにする
+- 状態はファイルに残す
+- push、デプロイ、外部送信は人の承認を必須にする
+- 無人のループは別ブランチや別の作業場所で動かす
+- /loop や /schedule は人が手で始める（定期の自動実行からは Claude Code を呼ばない）
+
+【グラフ】
+- 決まった段階、承認、並列、段階ごとに違う道具が無ければ、1本のループで十分
+- 各ノードの入力と出力の形を決める（自由文ではなく型）
+- 検査役には作業役の会話を見せず、成果物と証拠だけを渡す
+- 外の証拠に必ずつなぐ（実際に走ったテスト、実際の数値、人の確認）
+- 権限チェックや承認は、プロンプトではなくコードやツールの側に置く
+- 並列の幅と費用に上限を付ける
+- 合流するときは「何件返ってきたか」を数え、欠けを見逃さない</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>CLAUDE.md の例（目次型で短く）</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre># このリポジトリについて
+- 目的: 資格問題集アプリ。詳細は docs/README.md
+- テスト: npm test（変更後は必ず実行）
+- 問題データの形式チェック: ./scripts/check_questions.sh
+
+# 確認なしでよい作業
+- 編集、テストの実行、リンター、ローカルでの検証、調査
+
+# 確認が要る作業
+- コミット、push、PR作成、マージ、外部への送信、削除、設定や権限の変更
+
+# やらないこと
+- テストファイルとリンター設定を書きかえて通すこと（直すのはコード側）
+- 秘密情報（.env など）を読む・書く</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>設定例. 設定ファイルとテストの書きかえを止めるフック</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>.claude/settings.json
+
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "bash .claude/hooks/protect.sh" }
+        ]
+      }
+    ]
+  }
+}
+
+.claude/hooks/protect.sh
+
+#!/usr/bin/env bash
+file="$(jq -r '.tool_input.file_path // .tool_input.path // empty')"
+case "$file" in
+  *eslint.config*|*biome.json|*tsconfig.json|*/tests/*|*.env*)
+    echo "BLOCKED: $file は保護されています。コード側を直してください。" &gt;&amp;2
+    exit 2 ;;
+esac
+exit 0
+
+（exit 2 で止まり、理由がAIに返ります。仕様は Claude Code Docs の Hooks リファレンスを参照）</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>設定例. 終わる前にテストを走らせる門</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>.claude/settings.json
+
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/verify.sh" }
+        ]
+      }
+    ]
+  }
+}
+
+.claude/hooks/verify.sh
+
+#!/usr/bin/env bash
+input="$(cat)"
+[ "$(echo "$input" | jq -r '.stop_hook_active')" = "true" ] &amp;&amp; exit 0
+cd "$CLAUDE_PROJECT_DIR" || exit 2
+result="$(npm test 2&gt;&amp;1)" &amp;&amp; exit 0
+echo "テストが失敗しています。通るまで直してください:" &gt;&amp;2
+echo "$result" | tail -20 &gt;&amp;2
+exit 2
+
+（stop_hook_active の確認は、止め続けて終わらなくなるのを防ぐためです）</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>設定例. 編集できない検証役（evaluator）</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>.claude/agents/evaluator.md
+
+---
+name: evaluator
+description: 完了と言われた作業を疑ってレビューする検証専用の係。編集はしない
+tools: Read, Grep, Bash
+---
+実装した係の説明は信用しないでください。
+1. テストを自分で実行し、結果を確かめる
+2. テストや設定が書きかえられていないか差分を確かめる
+1行目に PASS か NEEDS_WORK だけを書き、2行目以降に根拠を書いてください。
+Bash はテストの実行と閲覧だけに使ってください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>依頼文1. ハーネスの最小構成を作る</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>このリポジトリに最小限のハーネスを入れてください。
+(1) CLAUDE.md を50行以内の目次型で作る、(2) 編集のたびにリンターを走らせる PostToolUse フック、
+(3) テストが通るまで終わらせない Stop フック、(4) リンター設定とテストの書きかえを止める PreToolUse フック。
+作ったら、わざと壊したコードで各フックが動くことを確かめ、結果を見せてください。コミットはまだしないでください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>依頼文2. 設定ファイルの検査ループ</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>config/ 以下の設定ファイルを検査するスクリプト scripts/lint_config.py を作ってください。
+最低限、(1) 必須の項目が欠けていないか、(2) 秘密情報が平文で入っていないか、(3) 値の種類が正しいか、を確かめます。
+エラー文には「どの行が」「なぜだめか」「どう直すか」を書いてください。
+そのあと、設定を編集するたびにこのスクリプトが走るフックを設定してください。本番環境には一切つながないでください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>依頼文3. 運用のグラフを書き出す</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>このリポジトリの README と、役割・定期作業の説明を読んで、作業と定期実行のつながりを「ノード（誰・何）」「エッジ（何を誰に渡すか）」「承認の地点」の3つで書き出してください。
+そのうえで、担当同士の確認だけで終わっていて、テストなど外の証拠と照合していない箇所を挙げてください。
+提案だけで、ファイルは変更しないでください。</pre>
+</div>
+
+<div class="copybox">
+  <div class="bar"><b>依頼文4. 長い作業の引き継ぎ</b><button type="button" class="copybtn" data-copy>コピー</button></div>
+  <pre>この機能追加は長くなるので、最初に feature_list.json（各項目に "passes": false）と progress.md を作ってください。
+以後は毎回、git log と progress.md を読んでから、未完了の項目を1つだけ進め、テストが通ったら passes を true にし、progress.md に記録してコミット案を見せてください。
+feature_list.json の項目を消したり書きかえたりしないでください。</pre>
+</div>
+
+</div>
+
+<p class="foot">出典: 公開情報の調査。数字とURLは2026-11-10（日本時間）に開いて確かめたものです。このページは2026-11-10に作りました。</p>
+</div>
+<script>
+(function(){
+  function fallback(pre, btn){
+    var range = document.createRange();
+    range.selectNodeContents(pre);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    var ok = false;
+    try{ ok = document.execCommand("copy"); }catch(e){ ok = false; }
+    if(ok){
+      done(btn);
+    }else{
+      btn.textContent = "選択したのでコピーしてください";
+    }
+  }
+  function done(btn){
+    var prev = btn.getAttribute("data-label") || "コピー";
+    btn.textContent = "コピーした";
+    setTimeout(function(){ btn.textContent = prev; }, 1600);
+  }
+  document.querySelectorAll("[data-copy]").forEach(function(btn){
+    btn.setAttribute("data-label", btn.textContent);
+    btn.addEventListener("click", function(){
+      var box = btn.closest(".copybox");
+      var pre = box ? box.querySelector("pre") : null;
+      if(!pre){ return; }
+      var text = pre.textContent;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ done(btn); }, function(){ fallback(pre, btn); });
+      }else{
+        fallback(pre, btn);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
