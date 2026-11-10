@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>韓国の肌診断アプリ 早わかり</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --code-bg: #f1ede7;
+  --ok: #23663f;
+  --later: #7a5300;
+  --no: #a33232;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --code-bg: #2a272e;
+    --ok: #86d9a8;
+    --later: #f2cc78;
+    --no: #f29a9a;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 0 0 16px;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin: 0 0 12px;
+  color: var(--accent);
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 20px 0 8px;
+}
+h3:first-of-type { margin-top: 8px; }
+p { margin: 0 0 10px; }
+ul, ol {
+  padding-left: 1.3em;
+  margin: 0;
+}
+li { margin: 0 0 8px; }
+a { color: var(--accent); }
+strong { font-weight: 700; }
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0 0 12px;
+}
+.card h3 { margin-top: 0; }
+.card ul { list-style: none; padding-left: 0; }
+.card li { padding-left: 0; }
+.tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1px 9px;
+  margin-right: 6px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.tag.ok { color: var(--ok); }
+.tag.later { color: var(--later); }
+.tag.no { color: var(--no); }
+.table-wrap { margin: 0 0 12px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr { display: block; width: 100%; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tbody tr {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin: 0 0 10px;
+  }
+  tbody td {
+    border-bottom: 0;
+    padding: 4px 0 8px;
+  }
+  tbody td:last-child { padding-bottom: 0; }
+  tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 700;
+  }
+}
+th, td {
+  padding: 8px 6px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+th {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+td.name { font-weight: 700; }
+.src { font-size: 0.82rem; color: var(--muted); }
+.copy-box {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px 14px;
+  margin: 0 0 14px;
+}
+.copy-box h3 { margin: 0 0 6px; }
+.copy-box pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: var(--code-bg);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 8px 0 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+button.copy-btn {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--card);
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+button.copy-btn:focus-visible {
+  outline: 3px solid var(--later);
+  outline-offset: 2px;
+}
+.note-sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+.foot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+.sources-list li { font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>韓国の肌診断アプリ 早わかり</h1>
+<p class="lead">韓国の肌診断アプリが、どんな仕組みで、どんな人に使われ、どう作れるかを、調べた事実だけでまとめたページです。</p>
+
+<section id="conclusion">
+  <h2>結論</h2>
+  <ol>
+    <li>韓国の肌診断は、写真で測って、その場で商品を勧める形が主流です。診断は無料で、商品の販売や広告、機器の販売で稼いでいます。</li>
+    <li>日本人の需要ははっきりあります。2024年に韓国の皮膚科にかかった日本人は<strong>30.8万人</strong>でした（<a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>）。ただし資生堂とコーセーが、日本語の無料のスマホ肌チェックをすでに出しています。</li>
+    <li>個人開発で勝つなら、病気の判定はしないことです。記録と比べる、成分を調べる、似合う色を出す、の3つに絞ります。顔写真はスマホの中だけで処理すると安全です。</li>
+  </ol>
+</section>
+
+<section id="market">
+  <h2>市場と主なアプリの比較</h2>
+  <p class="note-sub">数字は、各社の発表と記事に書かれたものです。人数は人（または万人）、金額はウォン、件数は件で書いています。</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:24%">サービス</th>
+          <th style="width:25%">測り方</th>
+          <th style="width:27%">規模</th>
+          <th style="width:24%">稼ぎ方</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="サービス">화해（ファヘ）</td>
+          <td data-label="測り方">問診が中心。肌タイプと悩み、口コミから相性スコアを出す</td>
+          <td data-label="規模">累計1,200万ダウンロード、月100万人（<a href="https://blog.hwahae.co.kr/all/newsroom/news/14918" target="_blank" rel="noopener">公式ブログ（화해）</a>）</td>
+          <td data-label="稼ぎ方">商品の販売と広告。2024年の売上は824億ウォン。広告は157億ウォン（売上の19%）、営業損失は27億ウォン（<a href="https://dealsite.co.kr/articles/144477" target="_blank" rel="noopener">ニュース記事（딜사이트）</a>）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="サービス">ルルラボ（Lululab）</td>
+          <td data-label="測り方">カメラと AI。1回撮ると10項目を出す（<a href="https://www.lulu-lab.com/" target="_blank" rel="noopener">公式サイト（Lululab）</a>）</td>
+          <td data-label="規模">肌データ500万件以上（<a href="https://www.lulu-lab.com/" target="_blank" rel="noopener">公式サイト（Lululab）</a>）。3日間で1,011件分析（<a href="https://imr.kr/2026/09/08/kbeauty-personalized-diagnosis/" target="_blank" rel="noopener">ニュース記事（IMR）</a>）</td>
+          <td data-label="稼ぎ方">会社向けの販売（機器と組み込み部品）。料金は（未確認）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="サービス">アモーレパシフィック</td>
+          <td data-label="測り方">鏡型の画面、美容機器での肌測定、専用アプリ</td>
+          <td data-label="規模">HERA カスタムマッチは月平均1,500人（<a href="https://ir.newspim.com/news/view/20251106001155" target="_blank" rel="noopener">ニュース記事（뉴스핌）</a>）</td>
+          <td data-label="稼ぎ方">美容機器の販売。HERA の料金は（未確認）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="サービス">オリーブヤング（スキンスキャン）</td>
+          <td data-label="測り方">機械で顔を撮り、店の担当者が結果を説明。1人15分ほど（<a href="https://www.fnnews.com/news/202511171451378936" target="_blank" rel="noopener">ニュース記事（파이낸셜뉴스）</a>）</td>
+          <td data-label="規模">累計100万件超、全国60店ほど。2026年中に100店以上へ広げる予定（<a href="https://corp.oliveyoung.com/ko/newsroom/press/95" target="_blank" rel="noopener">公式ニュース（CJ オリーブヤング）</a>）</td>
+          <td data-label="稼ぎ方">診断は無料。その場で商品を買ってもらう</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="サービス">資生堂（エリクシール AI スキンアナライザー）</td>
+          <td data-label="測り方">スマホで顔を撮り、質問に答える。16項目（<a href="https://corp.shiseido.com/jp/news/detail.html?n=00000000004207" target="_blank" rel="noopener">公式ニュース（資生堂）</a>）</td>
+          <td data-label="規模">2024年9月から、延べ172.9万人（<a href="https://corp.shiseido.com/jp/news/detail.html?n=00000000004207" target="_blank" rel="noopener">公式ニュース（資生堂）</a>）</td>
+          <td data-label="稼ぎ方">AI チャットで商品を勧める</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="サービス">コーセー（KOSÉ HADA mite）</td>
+          <td data-label="測り方">スマホの Web で。肌年齢など10項目（<a href="https://www.kose.co.jp/kose/hadamite/" target="_blank" rel="noopener">公式サイト（コーセー）</a>）</td>
+          <td data-label="規模">（未確認）</td>
+          <td data-label="稼ぎ方">スキンケア商品を勧める（<a href="https://www.kose.co.jp/kose/hadamite/" target="_blank" rel="noopener">公式サイト（コーセー）</a>）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>表の補足</h3>
+  <ul>
+    <li>화해は、2019年に中国の Meitu と組んだ期間限定イベントで、自撮りから5項目を出しました（<a href="https://blog.hwahae.co.kr/all/newsroom/news/826" target="_blank" rel="noopener">公式ブログ（화해）</a>）。今も常にカメラ測定があるかは（未確認）</li>
+    <li>화해は、2025年2月に日本語版の Web を出しました。英語版は出して2か月で、月に使う人が10万人を超えました。国別では日本の利用者が上位だったそうです（<a href="https://blog.hwahae.co.kr/all/newsroom/news/14918" target="_blank" rel="noopener">公式ブログ（화해）</a>）。別の記事では累計1,300万ダウンロードと書かれています（<a href="https://dealsite.co.kr/articles/144477" target="_blank" rel="noopener">ニュース記事（딜사이트）</a>）。</li>
+    <li>各社の精度は、会社自身の主張です。外部の検証は見つかっていません。ルルラボは92%以上、アモーレは85%超と言っています（<a href="https://www.lulu-lab.com/" target="_blank" rel="noopener">公式サイト（Lululab）</a>、<a href="https://www.avinteractive.com/news/products/samsung-unveils-microled-mirror-that-offers-beauty-advice-07-01-2025/" target="_blank" rel="noopener">ニュース記事（AV Magazine）</a>）。</li>
+    <li>アモーレの研究発表の AESTURA は、33項目に29の皮膚の病気を入れています。医療に近い話です（<a href="https://imr.kr/2026/09/08/kbeauty-personalized-diagnosis/" target="_blank" rel="noopener">ニュース記事（IMR）</a>）。</li>
+    <li>オリーブヤングは、2025年12月から、肌タイプなど6種類の結果をアプリで見られるようになりました（<a href="https://corp.oliveyoung.com/ko/newsroom/press/95" target="_blank" rel="noopener">公式ニュース（CJ オリーブヤング）</a>）。</li>
+    <li>オリーブヤングの聖水の大型店では、上位版を使った客の78%が商品を買い、使わなかった客は43%でした（<a href="https://retailasia.com/stores/exclusive/cj-olive-young-woos-tourists-in-search-k-beautys-glass-skin" target="_blank" rel="noopener">ニュース記事（Retail Asia）</a>）。公開日はページ上で「1 year ago」とだけ表示されていました（未確認）</li>
+    <li>同じ聖水の大型店では、肌の相談を受ける人の87%が外国人です。1日34〜40人で、予約は午前中に埋まります（<a href="https://economist.co.kr/article/view/ecn202511170047" target="_blank" rel="noopener">ニュース記事（이코노미스트）</a>）。</li>
+    <li>資生堂とコーセーは、「診断」ではなく「肌測定」「肌チェック」と呼んでいます。呼び方の理由は（未確認）</li>
+  </ul>
+</section>
+
+<section id="demand">
+  <h2>日本人の需要</h2>
+  <h3>数字</h3>
+  <ul>
+    <li>2024年に韓国へ来た外国人患者は117万人で、前の年の約2倍でした。そのうち皮膚科は70.5万人（56.6%）です（<a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>）。</li>
+    <li>日本人で皮膚科にかかった人は30.8万人で、前の年より155.2%増えました。日本人患者の69.7%が皮膚科です（<a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>）。</li>
+    <li>2025年に韓国へ行った日本人は365万人で、過去最多です。2026年の目標は450万人です（<a href="https://www.travelvoice.jp/20260513-159750" target="_blank" rel="noopener">ニュース記事（トラベルボイス）</a>）。</li>
+    <li>ソウルで外国人が美容サービスに使ったお金は、2023年に364億ウォンでした。2019年は110億ウォンです（<a href="https://www.mk.co.kr/news/business/10989038" target="_blank" rel="noopener">ニュース記事（매경이코노미）</a>。数字はソウル観光財団のもの）。</li>
+    <li>韓国の化粧品産業は、比べた19か国の中で1位と評価されました（<a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>）。</li>
+  </ul>
+
+  <h3>流行っている理由</h3>
+  <ul>
+    <li>SNS がきっかけになっています。オリーブヤングの客は「TikTok で見た」と話しています（<a href="https://www.etoday.co.kr/news/view/2533495" target="_blank" rel="noopener">ニュース記事（이투데이）</a>）。</li>
+    <li>診断が無料で、そのまま買えます。日本人旅行者の中心は20〜30代の女性の個人旅行で、行き先は明洞・江南から聖水・漢南洞に広がっています（<a href="https://www.travelvoice.jp/20260513-159750" target="_blank" rel="noopener">ニュース記事（トラベルボイス）</a>）。</li>
+  </ul>
+
+  <h3>パーソナルカラー</h3>
+  <ul>
+    <li>韓国では12〜16タイプに分けるのが主流です。日本は4タイプが主流です（<a href="https://rurubu.jp/andmore/article/25006" target="_blank" rel="noopener">ニュース記事（るるぶ&amp;more.）</a>、<a href="https://minfor.jp/beauty/16138/" target="_blank" rel="noopener">記事（minfor）</a>）。</li>
+    <li>外国人向けサイト Creatrip の美容店の売上のうち、パーソナルカラーは件数で47%、金額で75%でした（2023年。<a href="https://www.mk.co.kr/news/business/10989038" target="_blank" rel="noopener">ニュース記事（매경이코노미）</a>）。</li>
+    <li>1回の料金は10万〜15万ウォンほどです。日本語の通訳付きの店では、40分18万ウォンの例があります（<a href="https://creatrip.com/ja/spot/13387" target="_blank" rel="noopener">店の料金ページ（Creatrip）</a>）。</li>
+  </ul>
+
+  <h3>日本人の気持ち（アンケート）</h3>
+  <ul>
+    <li>20〜50代の女性545人のうち、57%が「韓国で美容の施術を受けることに関心がある」と答えました（<a href="https://prtimes.jp/main/html/rd/p/000000013.000158040.html" target="_blank" rel="noopener">プレスリリース（PR TIMES）</a>）。いちばん人気はシミ取りでした。</li>
+    <li>調べたのは韓国の美容ツアーを売る会社なので、数字は高めに出ている可能性があります。これは推測です。</li>
+    <li>不安の上位は「言葉の壁」と「帰国後のケア」で、どちらも299票でした（<a href="https://prtimes.jp/main/html/rd/p/000000013.000158040.html" target="_blank" rel="noopener">プレスリリース（PR TIMES）</a>）。</li>
+  </ul>
+
+  <h3>X で伸びた投稿（2026-11-10 に取得）</h3>
+  <ul>
+    <li>配信者 Lacy さんが韓国で肌診断を受けた切り抜きは、表示262,398回、いいね2,364でした（<a href="https://x.com/Snowwy/status/2117481084841800106" target="_blank" rel="noopener">Xの投稿（@Snowwy）</a>、2026-11-03 13:56 日本時間）。</li>
+    <li>同じ配信の別の切り抜きは、表示156,580回、いいね1,586でした（<a href="https://x.com/thecorruptmp4/status/2117512732971073977" target="_blank" rel="noopener">Xの投稿（@thecorruptmp4）</a>、2026-11-03 16:02 日本時間）。</li>
+    <li>日本語の投稿で大きく伸びたものは見つかりませんでした。韓国の病院の宣伝と、個人の体験談が中心でした。</li>
+  </ul>
+</section>
+
+<section id="technology">
+  <h2>作るときの技術と、難しいところ</h2>
+  <h3>作り方は3つ</h3>
+
+  <div class="card">
+    <h3><span class="tag ok">使える</span>問診式（カメラなし）</h3>
+    <ul>
+      <li>質問に答えてもらい、肌タイプと悩みを決めます。顔写真を扱いません。</li>
+      <li>日本語でも、4問30秒で151ブランドから選ぶ無料診断があります（<a href="https://x.com/stats_log_net/status/2116362019653775404" target="_blank" rel="noopener">Xの投稿（@stats_log_net「Glow」）</a>）。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag later">あとで</span>外のサービスに写真を送る（API）</h3>
+    <ul>
+      <li>写真を外のサービスに送り、結果を受け取る仕組みです。例は Perfect Corp の「AI Skin Analysis V2.1」で、正面の自撮り1枚から16項目を測ります（<a href="https://docs.perfectcorp.com/reference/ai_skin_analysis/section/overview/unit-consumption" target="_blank" rel="noopener">開発者向け資料（Perfect Corp）</a>）。</li>
+      <li>料金はポイント制です。1〜4項目は標準画質で9ポイント、13〜16項目は高画質で22ポイントです。1ポイントの値段は（未確認）</li>
+      <li>資料には、表示用の点数は生の点数より良く見えるよう調整している、と書かれています（<a href="https://docs.perfectcorp.com/reference/ai_skin_analysis/section/overview/unit-consumption" target="_blank" rel="noopener">開発者向け資料（Perfect Corp）</a>）。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag ok">使える</span>自分で作る（端末内処理）</h3>
+    <ul>
+      <li>端末内処理は、写真をサーバーに送らず、スマホの中だけで計算することです。Google の MediaPipe（Face Landmarker）は、顔の目印（ランドマーク）を478点、スマホの中で取れます（<a href="https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker" target="_blank" rel="noopener">開発者向け資料（Google）</a>）。</li>
+      <li>頬・額・鼻を切り出し、色や明るさ、テカリを測るところまでは個人でも作れます。毛穴やシワを正しく数えるには、学習用のデータ（データセット）が必要です。</li>
+    </ul>
+  </div>
+
+  <h3>使えそうな部品と、データ</h3>
+  <p class="note-sub">スター数は 2026-11-10 15:16 日本時間に GitHub で取りました。</p>
+  <ul class="sources-list">
+    <li><span class="tag ok">使える</span><a href="https://github.com/google-ai-edge/mediapipe" target="_blank" rel="noopener">コード置き場（GitHub・MediaPipe）</a>: 顔の目印を取る部品。Apache-2.0。スター37,625。</li>
+    <li><span class="tag ok">使える</span><a href="https://github.com/sfu-mial/awesome-skin-image-analysis-datasets" target="_blank" rel="noopener">コード置き場（GitHub・データセット一覧）</a>: 肌の画像データセットの一覧。MIT。スター56。</li>
+    <li><span class="tag later">あとで</span><a href="https://github.com/google-research-datasets/scin" target="_blank" rel="noopener">コード置き場（GitHub・SCIN）</a>: Google の皮膚の写真1万枚超（米国で集めたもの）。病気の写真が中心で、美容には向きにくいです。スター173。使える条件は（未確認）</li>
+    <li><span class="tag later">あとで</span><a href="https://github.com/leejeongho3214/NIA" target="_blank" rel="noopener">コード置き場（GitHub・NIA）</a>: 韓国の「韓国人の肌状態の測定データ」で学んだ、顔写真から肌の等級と測定値を当てるモデル。MIT。スター12。</li>
+    <li><span class="tag no">不要</span><a href="https://github.com/gjain307/Skin-Disease-Detection" target="_blank" rel="noopener">コード置き場（GitHub・Skin-Disease-Detection）</a>: 赤ら顔、ニキビ、シワ、クマ、そばかすを検出。スター63。最終更新は2020年です。病気に近い項目を当てるので、今回の方針とは合いません。</li>
+    <li><span class="tag later">あとで</span>AI Hub の「한국인 피부상태 측정 데이터」: 顔写真13,936枚、肌の測定データ84,688件、正解ラベル125,424件。韓国の外から使えるか、商用で使えるかは（未確認）（<a href="https://data.edmgr.kr/dataView.do?id=aihub_71645" target="_blank" rel="noopener">データの説明（교육데이터 활용 지원 서비스）</a>）</li>
+    <li><span class="tag no">不要</span>同じ AI Hub の32種類の皮膚の病気のデータ。病気を当てる機能は医療機器に当たるおそれがあるので、使わないほうが安全です（<a href="https://data.edmgr.kr/dataView.do?id=aihub_71645" target="_blank" rel="noopener">データの説明（교육데이터 활용 지원 서비스）</a>）。</li>
+  </ul>
+
+  <h3>難しいところ</h3>
+  <ul>
+    <li>光と色: 部屋の明かり、カメラ、自動補正で色が変わります。Perfect Corp は、顔が写真の幅の60%以上、明るくむらのない光、化粧を落として撮ることを条件にしています（<a href="https://docs.perfectcorp.com/reference/ai_skin_analysis/section/overview/unit-consumption" target="_blank" rel="noopener">開発者向け資料（Perfect Corp）</a>）。</li>
+    <li>白い紙の工夫: 個人開発のパーソナルカラーアプリ「イロヌノ」は、顔の横に白い紙を置いて撮り、色をそろえています（<a href="https://x.com/apkderete/status/2114241786420101425" target="_blank" rel="noopener">Xの投稿（@apkderete）</a>）。</li>
+    <li>精度の根拠: 各社の精度は会社自身の主張です。Apple は、健康の測定の精度をうたうなら、データと方法を示すよう求めています（<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">公式ガイドライン（Apple）</a>）。</li>
+    <li>正解の作り方: 正しい答えには、皮膚科医の判定か、専用の測定器の数値が必要です。個人ではここがいちばん重い作業です。</li>
+    <li>肌の色の幅: 肌の色が違うと、精度が変わります。</li>
+    <li>加工アプリ: 自撮りは盛られていることが多いです。韓国発をうたう肌診断アプリについて、X では「フィルターでしょ」と呼びかける投稿がありました（<a href="https://x.com/GlowMatch2026/status/2112269856452329741" target="_blank" rel="noopener">Xの投稿（@GlowMatch2026）</a>）。このアプリの中身は（未確認）</li>
+  </ul>
+</section>
+
+<section id="law">
+  <h2>薬機法と個人情報の注意点</h2>
+
+  <h3>化粧品の広告（薬機法）</h3>
+  <ul>
+    <li>化粧品でうたえる効果は、決まった56項目の範囲だけです（<a href="https://www.mhlw.go.jp/file/06-Seisakujouhou-11120000-Iyakushokuhinkyoku/0000179262.pdf" target="_blank" rel="noopener">公式PDF（厚生労働省）</a>。一覧は<a href="https://www.pref.kyoto.jp/yakumu/koukoku/kesyouhin-kounou.html" target="_blank" rel="noopener">自治体の一覧（京都府）</a>）。</li>
+    <li><span class="tag ok">使える</span>「肌のキメを整える」「皮膚にうるおいを与える」「乾燥による小ジワを目立たなくする」</li>
+    <li><span class="tag no">不要</span>「シミが消える」「シワがなくなる」「ニキビが治る」は、範囲を超えます。</li>
+    <li>効果を確実だと保証する表現は禁止です。「最高」「No.1」などの最大級の表現も禁止です（<a href="https://www.mhlw.go.jp/file/06-Seisakujouhou-11120000-Iyakushokuhinkyoku/0000179262.pdf" target="_blank" rel="noopener">公式PDF（厚生労働省）</a>）。</li>
+    <li>医師、美容師、病院などの推薦も禁止です。「皮膚科医おすすめ」は要注意です。</li>
+    <li>診断の結果画面で商品を勧めると、その画面が広告として見られる可能性があります。これは推測です。</li>
+  </ul>
+
+  <h3>医療機器との境目</h3>
+  <ul>
+    <li>厚生労働省のガイドラインは、アプリが医療機器かを「何に使うと書いているか」と「危なさ」で決めます（<a href="https://www.mhlw.go.jp/web/t_doc?dataId=00tc7534&amp;dataType=1&amp;pageNo=1" target="_blank" rel="noopener">公式ガイドライン（厚生労働省）</a>）。</li>
+    <li>「医療機器ではありません」と書いても、それだけでは根拠になりません。個人を特定して病名を出し、かかっている・かかりそうと表示するアプリは、診断に使うものとされます。</li>
+    <li><span class="tag ok">使える</span>「うるおい」「キメ」「明るさ」「毛穴の目立ち」を点数にして、前回と比べる。</li>
+    <li><span class="tag no">不要</span>「ニキビ」「赤ら顔」「肝斑」などの病名を出す。「皮膚科に行くべき」と判断を示す。</li>
+    <li>「炎症ニキビの数を出す」が医療機器に当たるかは（未確認）</li>
+    <li>AI で診断を手伝う場合も、診断するのは医師です（<a href="https://www.pmda.go.jp/files/000227450.pdf" target="_blank" rel="noopener">公式PDF（PMDA に載る厚生労働省の通知）</a>）。</li>
+  </ul>
+
+  <h3>顔写真と個人情報</h3>
+  <ul>
+    <li>本人が分かる映像は個人情報です（<a href="https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/" target="_blank" rel="noopener">公式ガイドライン（個人情報保護委員会）</a>）。</li>
+    <li>顔の形や目鼻の位置を符号にしたものは、見分けられる水準なら個人識別符号に当たります。本人確認に使わなくても当たります（<a href="https://www.ppc.go.jp/all_faq_index/faq1-q1-23/" target="_blank" rel="noopener">公式Q&amp;A（個人情報保護委員会）</a>）。</li>
+    <li>写真を海外のサーバーに送るときは、原則として本人の同意を取ります（<a href="https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/" target="_blank" rel="noopener">公式ガイドライン（個人情報保護委員会）</a>）。</li>
+    <li>Perfect Corp では、結果は30日間保存されます（<a href="https://docs.perfectcorp.com/reference/ai_skin_analysis/section/overview/unit-consumption" target="_blank" rel="noopener">開発者向け資料（Perfect Corp）</a>）。</li>
+    <li>病気の記録は、要配慮個人情報（病歴）に当たる可能性があります。肌の状態の記録が当たるかは（未確認）</li>
+    <li>Apple は、顔の形のデータを広告やマーケティングに使うことを禁じています（<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">公式ガイドライン（Apple）</a>）。</li>
+    <li>いちばん安全なのは、写真を端末内処理にとどめ、サーバーには点数だけ送る作りです。</li>
+  </ul>
+</section>
+
+<section id="ideas">
+  <h2>個人開発の切り口3案</h2>
+
+  <div class="card">
+    <h3>1. 「渡韓肌ノート」</h3>
+    <ul>
+      <li>やること: 韓国で受けた肌診断の結果を、日本語で記録します。帰国後は、同じ明るさ・同じ構図で自撮りして比べます。</li>
+      <li>理由: 2024年に韓国の皮膚科にかかった日本人は30.8万人いました（<a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>）。結果は店ごとの紙や韓国語のアプリに散らばっているとみられます。散らばり方は推測です。</li>
+      <li>作り方: 数値は手入力か結果画面の写真で取り、病名は出しません。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>2. 問診式の「肌タイプと韓国コスメの成分チェック」</h3>
+    <ul>
+      <li>やること: カメラを使わず、質問に答えて肌タイプと悩みを決め、韓国コスメの成分を調べます。</li>
+      <li>理由: 顔写真を扱わないので、個人情報と医療機器の心配がいちばん小さいです。質問に答える形で作れます。</li>
+      <li>注意: すでに4問の無料診断があります。成分の説明の分かりやすさか、旅行前の買い物リストづくりで違いを出します。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>3. 「白い紙で色合わせ」のパーソナルカラー</h3>
+    <ul>
+      <li>やること: 端末内処理で顔の色を測り、韓国式の12タイプで、似合う色と色番号を出します。</li>
+      <li>理由: 病気と関係がないので、薬機法と医療機器の心配が小さいです。旅行者向けサイト Creatrip の美容店の売上では、金額の75%がパーソナルカラーでした（<a href="https://www.mk.co.kr/news/business/10989038" target="_blank" rel="noopener">ニュース記事（매경이코노미）</a>）。</li>
+      <li>注意: 個人開発の「イロヌノ」が近いことをしています。</li>
+    </ul>
+  </div>
+
+  <p>どの案でも、病名を出さないこと、「治る」「消える」と言わないこと、写真を送るなら同意を取ることは同じです。</p>
+</section>
+
+<section id="next">
+  <h2>次にやること</h2>
+  <ol>
+    <li><span class="tag ok">使える</span>まず問診式か記録ノートで作ります。カメラを使わないので、いちばん早く試せます。</li>
+    <li>写真を使うなら、端末内処理にします。サーバーには点数だけを送ります。</li>
+    <li>病気の判定はしません。</li>
+  </ol>
+  <p>迷ったときは、厚生労働省の監視指導・麻薬対策課に相談できます（<a href="https://www.mhlw.go.jp/web/t_doc?dataId=00tc7534&amp;dataType=1&amp;pageNo=1" target="_blank" rel="noopener">公式ガイドライン（厚生労働省）</a>）。</p>
+</section>
+
+<section id="prompts">
+  <h2>試作を頼む文</h2>
+  <p class="note-sub">下の文をコピーして、Claude Code にそのまま貼ると、試作を頼めます。</p>
+
+  <div class="copy-box">
+    <h3>案1「渡韓肌ノート」</h3>
+    <pre id="prompt-1">韓国で受けた肌診断の結果を、日本語で記録する試作を作ってください。
+・記録する項目は、うるおい、キメ、明るさ、毛穴の目立ちの4つだけにしてください。点数は手入力でも、結果画面の写真でも構いません。
+・写真は端末の中だけで処理し、サーバーには送らないでください。送る作りにする場合は、事前に同意を取る画面を入れてください。
+・病名や「皮膚科に行くべき」といった判断は出さないでください。「治る」「消える」といった表現も使わないでください。
+・帰国後に同じ明るさ・同じ構図で撮った記録と、前回を並べて比べられるようにしてください。
+・1ファイルのHTMLで、スマホで見やすく作ってください。</pre>
+    <button type="button" class="copy-btn" data-target="prompt-1">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>案2「問診式の成分チェック」</h3>
+    <pre id="prompt-2">カメラを使わず、質問に答えて肌タイプと悩みを決め、韓国コスメの成分をチェックする試作を作ってください。
+・短い質問に答えてもらい、肌タイプと悩みを選んでもらう形にしてください。顔写真は扱わないでください。
+・成分の説明は、成分名と一般的な役割だけにしてください。「効く」「治る」「消える」といった効果の保証はしないでください。
+・病名や病気の判定は出さないでください。
+・将来写真を使う場合は、端末の中だけで処理し、送るときは事前に同意を取る設計にしてください。
+・1ファイルのHTMLで、スマホで見やすく作ってください。</pre>
+    <button type="button" class="copy-btn" data-target="prompt-2">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>案3「白い紙で色合わせのパーソナルカラー」</h3>
+    <pre id="prompt-3">白い紙を顔の横に置いて撮り、顔の色を端末の中だけで測って、韓国式のタイプで似合う色を出す試作を作ってください。
+・撮る前に手順を案内してください。明るくむらのない光で、化粧を落として撮ることを勧めてください。
+・顔の写真は端末の中だけで処理し、サーバーには送らないでください。送る作りにする場合は、事前に同意を取る画面を入れてください。
+・結果は似合う色のタイプと色の例だけにしてください。病名や肌の状態の判定はしないでください。「治る」「消える」といった効果の保証もしないでください。
+・1ファイルのHTMLで、スマホで見やすく作ってください。</pre>
+    <button type="button" class="copy-btn" data-target="prompt-3">コピー</button>
+  </div>
+</section>
+
+<section id="unknown">
+  <h2>確かめられなかったこと</h2>
+  <ul>
+    <li>화해の今のアプリに、カメラで測る機能が常にあるか。</li>
+    <li>2024年の日本人患者の総数。開いたページには、皮膚科30.8万人と割合69.7%しか書かれていませんでした。</li>
+    <li>ルルラボの料金と売上。アモーレのアプリのダウンロード数。</li>
+    <li>オリーブヤングのスキンスキャンの機械を作っている会社。</li>
+    <li>Perfect Corp の1ポイントの値段と、無料で使えるポイント数。</li>
+    <li>AI Hub のデータを韓国の外から使えるか、商用で使えるか。SCIN のデータを使える条件。</li>
+    <li>「ニキビの数を出す」機能が医療機器に当たるか。肌の状態の記録が要配慮個人情報に当たるか。</li>
+    <li>韓国の利用者向けに出すときの韓国の法律（今回は調べていません）。</li>
+    <li>GlowMatch の運営者とダウンロード数。Creatrip が言う「ColorLover は韓国最大級の診断アプリを運営」の裏付け。</li>
+    <li>日本語の X で、肌診断アプリの話題がどれくらい伸びているか。今回の範囲では、大きく伸びた日本語の投稿は見つかりませんでした。</li>
+    <li>各社の精度（92%、85% など）は会社の主張で、外部の検証は見つかっていません。</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>出典</h2>
+
+  <h3>公的機関</h3>
+  <ul class="sources-list">
+    <li><a href="https://www.mohw.go.kr/board.es?act=view&amp;bid=0027&amp;list_no=1485191&amp;mid=a10503000000" target="_blank" rel="noopener">韓国政府の発表（韓国保健福祉部）</a>: 2024年の外国人患者の数と診療科</li>
+    <li><a href="https://www.mhlw.go.jp/web/t_doc?dataId=00tc7534&amp;dataType=1&amp;pageNo=1" target="_blank" rel="noopener">公式ガイドライン（厚生労働省）</a>: アプリが医療機器になる線引き</li>
+    <li><a href="https://www.mhlw.go.jp/file/06-Seisakujouhou-11120000-Iyakushokuhinkyoku/0000179262.pdf" target="_blank" rel="noopener">公式PDF（厚生労働省）</a>: 医薬品等適正広告基準。保証・最大級・推薦の禁止</li>
+    <li><a href="https://www.pmda.go.jp/files/000227450.pdf" target="_blank" rel="noopener">公式PDF（PMDA に載る厚生労働省の通知）</a>: AI を使っても、診断するのは医師</li>
+    <li><a href="https://www.pref.kyoto.jp/yakumu/koukoku/kesyouhin-kounou.html" target="_blank" rel="noopener">自治体の一覧（京都府）</a>: 化粧品で言える56項目</li>
+    <li><a href="https://www.ppc.go.jp/personalinfo/legal/guidelines_tsusoku/" target="_blank" rel="noopener">公式ガイドライン（個人情報保護委員会）</a>: 映像は個人情報、顔の符号、外国への提供</li>
+    <li><a href="https://www.ppc.go.jp/all_faq_index/faq1-q1-23/" target="_blank" rel="noopener">公式Q&amp;A（個人情報保護委員会）</a>: 本人確認に使わなくても個人識別符号になる</li>
+    <li><a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener">公式ガイドライン（Apple）</a>: 健康の測定の精度、顔のデータの扱い</li>
+  </ul>
+
+  <h3>会社の公式発表・公式資料</h3>
+  <ul class="sources-list">
+    <li><a href="https://blog.hwahae.co.kr/all/newsroom/news/14918" target="_blank" rel="noopener">公式ブログ（화해）</a>: 1,200万ダウンロード、月100万人、日本語版</li>
+    <li><a href="https://blog.hwahae.co.kr/all/newsroom/news/826" target="_blank" rel="noopener">公式ブログ（화해）</a>: Meitu と組んだ自撮り肌診断イベント</li>
+    <li><a href="https://play.google.com/store/apps/details?hl=ko&amp;id=kr.co.company.hwahae" target="_blank" rel="noopener">アプリ説明（Google Play）</a>: 화해の機能と評価</li>
+    <li><a href="https://www.lulu-lab.com/" target="_blank" rel="noopener">公式サイト（Lululab）</a>: 10項目、キオスク、SDK</li>
+    <li><a href="https://www.apgroup.com/int/ko/news/2025-01-06-1.html" target="_blank" rel="noopener">公式ニュース（アモーレパシフィック）</a>: サムスンの鏡に肌分析を搭載</li>
+    <li><a href="https://www.apgroup.com/int/ko/news/2025-03-17-2.html" target="_blank" rel="noopener">公式ニュース（アモーレパシフィック）</a>: 美容機器と専用アプリ</li>
+    <li><a href="https://corp.oliveyoung.com/ko/newsroom/press/95" target="_blank" rel="noopener">公式ニュース（CJ オリーブヤング）</a>: 6項目、60店、100店へ拡大</li>
+    <li><a href="https://corp.shiseido.com/jp/news/detail.html?n=00000000004207" target="_blank" rel="noopener">公式ニュース（資生堂）</a>: 延べ172.9万人、16項目</li>
+    <li><a href="https://www.kose.co.jp/kose/hadamite/" target="_blank" rel="noopener">公式サイト（コーセー）</a>: スマホの Web で肌チェック</li>
+    <li><a href="https://docs.perfectcorp.com/reference/ai_skin_analysis/section/overview/unit-consumption" target="_blank" rel="noopener">開発者向け資料（Perfect Corp）</a>: 16項目、ポイントの使い方、撮影の条件</li>
+    <li><a href="https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker" target="_blank" rel="noopener">開発者向け資料（Google）</a>: MediaPipe の478点、端末内で動く</li>
+    <li><a href="https://github.com/google-ai-edge/mediapipe" target="_blank" rel="noopener">コード置き場（GitHub・MediaPipe）</a>: 顔の目印を取る部品。スター37,625（2026-11-10 15:16 日本時間）</li>
+    <li><a href="https://github.com/google-research-datasets/scin" target="_blank" rel="noopener">コード置き場（GitHub・SCIN）</a>: 皮膚の写真1万枚超。スター173（同日）</li>
+    <li><a href="https://github.com/leejeongho3214/NIA" target="_blank" rel="noopener">コード置き場（GitHub・NIA）</a>: 韓国人の肌状態データで学んだモデル。スター12（同日）</li>
+    <li><a href="https://github.com/sfu-mial/awesome-skin-image-analysis-datasets" target="_blank" rel="noopener">コード置き場（GitHub・データセット一覧）</a>: 肌の画像データセットの一覧。スター56（同日）</li>
+    <li><a href="https://github.com/gjain307/Skin-Disease-Detection" target="_blank" rel="noopener">コード置き場（GitHub・Skin-Disease-Detection）</a>: 検出の例。スター63（同日）。最終更新は2020年</li>
+  </ul>
+
+  <h3>記事・プレスリリース</h3>
+  <ul class="sources-list">
+    <li><a href="https://dealsite.co.kr/articles/144477" target="_blank" rel="noopener">ニュース記事（딜사이트）</a>: 화해の売上・広告・赤字</li>
+    <li><a href="https://imr.kr/2026/09/08/kbeauty-personalized-diagnosis/" target="_blank" rel="noopener">ニュース記事（IMR）</a>: Lululab・AESTURA・オリーブヤングの比較</li>
+    <li><a href="https://kr.aving.net/news/articleView.html?idxno=1794436" target="_blank" rel="noopener">ニュース記事（AVING）</a>: Lululab の成り立ち</li>
+    <li><a href="https://www.avinteractive.com/news/products/samsung-unveils-microled-mirror-that-offers-beauty-advice-07-01-2025/" target="_blank" rel="noopener">ニュース記事（AV Magazine）</a>: 30秒、正解2万件、85%</li>
+    <li><a href="https://ir.newspim.com/news/view/20251106001155" target="_blank" rel="noopener">ニュース記事（뉴스핌）</a>: HERA カスタムマッチ</li>
+    <li><a href="https://economist.co.kr/article/view/ecn202511170047" target="_blank" rel="noopener">ニュース記事（이코노미스트）</a>: 外国人87%、1日34〜40人</li>
+    <li><a href="https://www.fnnews.com/news/202511171451378936" target="_blank" rel="noopener">ニュース記事（파이낸셜뉴스）</a>: 撮り方と15分の流れ</li>
+    <li><a href="https://www.etoday.co.kr/news/view/2533495" target="_blank" rel="noopener">ニュース記事（이투데이）</a>: TikTok で知った外国人客</li>
+    <li><a href="https://retailasia.com/stores/exclusive/cj-olive-young-woos-tourists-in-search-k-beautys-glass-skin" target="_blank" rel="noopener">ニュース記事（Retail Asia）</a>: 購入率78%と43%</li>
+    <li><a href="https://www.mk.co.kr/news/business/10989038" target="_blank" rel="noopener">ニュース記事（매경이코노미）</a>: パーソナルカラーの需要、料金、外国人の美容支出</li>
+    <li><a href="https://www.travelvoice.jp/20260513-159750" target="_blank" rel="noopener">ニュース記事（トラベルボイス）</a>: 訪韓日本人の数と傾向</li>
+    <li><a href="https://prtimes.jp/main/html/rd/p/000000013.000158040.html" target="_blank" rel="noopener">プレスリリース（PR TIMES）</a>: 日本人女性545人のアンケート</li>
+    <li><a href="https://rurubu.jp/andmore/article/25006" target="_blank" rel="noopener">ニュース記事（るるぶ&amp;more.）</a>: 12タイプの説明</li>
+    <li><a href="https://creatrip.com/ja/blog/13720" target="_blank" rel="noopener">記事（Creatrip）</a>: ソウルのパーソナルカラーの店</li>
+    <li><a href="https://creatrip.com/ja/spot/13387" target="_blank" rel="noopener">店の料金ページ（Creatrip）</a>: damppeum 聖水店の料金</li>
+    <li><a href="https://www.konest.com/tour/tour_detail.html?t_id=colorize" target="_blank" rel="noopener">ツアーの案内（コネスト）</a>: 明洞の診断ツアー</li>
+    <li><a href="https://minfor.jp/beauty/16138/" target="_blank" rel="noopener">記事（minfor）</a>: 日本と韓国の違い</li>
+    <li><a href="https://data.edmgr.kr/dataView.do?id=aihub_71645" target="_blank" rel="noopener">データの説明（교육데이터 활용 지원 서비스）</a>: AI Hub の肌状態データの中身</li>
+  </ul>
+
+  <h3>X の投稿（元投稿。時刻は日本時間）</h3>
+  <ul class="sources-list">
+    <li><a href="https://x.com/Snowwy/status/2117481084841800106" target="_blank" rel="noopener">Xの投稿（@Snowwy）</a>: 2026-11-03 13:56</li>
+    <li><a href="https://x.com/thecorruptmp4/status/2117512732971073977" target="_blank" rel="noopener">Xの投稿（@thecorruptmp4）</a>: 2026-11-03 16:02</li>
+    <li><a href="https://x.com/stats_log_net/status/2116362019653775404" target="_blank" rel="noopener">Xの投稿（@stats_log_net「Glow」）</a>: 2026-10-31 11:50</li>
+    <li><a href="https://x.com/apkderete/status/2114241786420101425" target="_blank" rel="noopener">Xの投稿（@apkderete「イロヌノ」）</a>: 2026-10-25 15:24</li>
+    <li><a href="https://x.com/GlowMatch2026/status/2112269856452329741" target="_blank" rel="noopener">Xの投稿（@GlowMatch2026）</a>: 2026-10-20 04:49</li>
+  </ul>
+
+  <p class="foot">数字は、2026-11-10 に開いたページや投稿から写しました。</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function markCopied(btn) {
+    btn.textContent = 'コピーしました';
+  }
+
+  function markFailed(btn) {
+    btn.textContent = 'コピーできませんでした';
+  }
+
+  document.querySelectorAll('button.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (!target) return;
+      var text = target.textContent;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          markCopied(btn);
+        }).catch(function () {
+          if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+        });
+      } else {
+        if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
