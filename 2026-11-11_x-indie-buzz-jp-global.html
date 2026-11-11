@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>直近3か月で伸びた個人開発者の投稿 早わかり</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --ok: #23663f;
+  --later: #7a5300;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --ok: #86d9a8;
+    --later: #f2cc78;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main { max-width: 880px; margin: 0 auto; padding: 20px 16px 48px; }
+h1 { font-size: 1.55rem; line-height: 1.35; margin: 0 0 8px; }
+.lead { color: var(--muted); margin: 0 0 20px; }
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 0 0 16px;
+}
+h2 { font-size: 1.2rem; line-height: 1.4; margin: 0 0 12px; color: var(--accent); }
+h3 { font-size: 1.05rem; line-height: 1.4; margin: 20px 0 8px; }
+h3:first-child { margin-top: 0; }
+ol, ul { margin: 0 0 12px; padding-left: 1.3em; }
+li { margin: 0 0 8px; }
+p { margin: 0 0 12px; }
+p:last-child { margin-bottom: 0; }
+a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.meta { color: var(--muted); font-size: 0.92rem; margin: 0 0 12px; }
+.person { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+.person:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+.mark {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin: 0 0 8px;
+}
+.mark-ok { color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+.mark-later { color: var(--later); background: color-mix(in srgb, var(--later) 16%, transparent); }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+.scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+.note { color: var(--muted); font-size: 0.92rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>直近3か月で伸びた個人開発者の投稿 早わかり</h1>
+<p class="lead">2026年8月11日から11月11日までに、Xで反応が大きかった個人開発者の投稿を、日本5人と海外5人に分けて見たページです。</p>
+
+<section>
+<h2>このページで分かること</h2>
+<ol>
+<li>条件に合う人は、日本5人・海外5人まで確認できた。数字は2026-11-11 22:34〜22:40（日本時間）に、公開のX読み取りで取った物だけである。</li>
+<li>日本でいちばん大きかったのは、とむいさん（@tomuisan）のライブカメラ地図「とまり木」。いいね 118,590、表示 19,884,559（2026-08-17 14:27 日本時間）。海外でいちばん大きかったのは、Nasさん（@NasNakarus）の「干し草の中の針」ゲーム。いいね 191,783、表示 54,160,722（2026-08-22 22:33 日本時間）。</li>
+<li>共通するのは、何ができるかが一瞬で分かること、画面や短いデモを添えること、伸びたあとに続報を出すことである。日本はフォロワーが少なくても、すぐ使える物やすぐ遊べる物が単発で伸びる例がある。確認した海外4人（Nas以外）は、すでにフォロワーが多く、売上や教訓の投稿が目立つ。</li>
+</ol>
+</section>
+
+<section>
+<h2>日本の5人</h2>
+<p class="meta">今日まとめた別の12人（「十二鬼月」）とは重ねていない。時刻は日本時間。</p>
+
+<article class="person">
+<p class="mark mark-ok">すぐ使える道具</p>
+<h3>とむい（<a href="https://x.com/tomuisan">@tomuisan</a>）</h3>
+<p>日本や世界のライブカメラを、地図や地球儀から選んで見られる「とまり木」を作っている。フォロワー 39,725人。</p>
+<p>いちばん伸びた投稿は「日本中のライブカメラを地図から選んで覗けるようにしてみた」。いいね 118,590、リポスト 21,978、表示 19,884,559（<a href="https://x.com/tomuisan/status/2089222447954575449">2026-08-17 14:27</a>）。続いて世界版の地球儀（いいね 9,235、表示 875,853、<a href="https://x.com/tomuisan/status/2090638871923204259">8月21日</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-ok">少ないフォロワーから</p>
+<h3>ねぶ（<a href="https://x.com/nebusoku_owl">@nebusoku_owl</a>）</h3>
+<p>自分の絵に合わせた3Dの頭部ガイド「ぐるぐるルーミス」を、無料の道具として出している。フォロワー 964人。</p>
+<p>「フォロワーが20から130になってて二度見した」という投稿が、いいね 12,158、表示 274,832、保存 10,711（<a href="https://x.com/nebusoku_owl/status/2112517940352590114">2026-10-20 21:15</a>）。その2日前の最初の紹介は、いいね 5,267、表示 164,285（<a href="https://x.com/nebusoku_owl/status/2111627069746544845">10月18日</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-ok">実際の画面の対比</p>
+<h3>うきぷう（<a href="https://x.com/ovo822">@ovo822</a>）</h3>
+<p>買い物の我慢を「浮いたお金」として記録する「ふわっと」を作っている。フォロワー 1,814人。</p>
+<p>自分と夫の記録の桁が違う画面を「格の違いを見せつけてる」と出した投稿が、いいね 76,890、表示 20,044,891（<a href="https://x.com/ovo822/status/2104870928777961842">2026-09-29 18:48</a>）。そのあと「サーバーがパンクしております」と報告した続きは、いいね 500、表示 359,800（<a href="https://x.com/ovo822/status/2104938539054227960">同日 23:17</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-ok">結果を見せたくなる</p>
+<h3>トドネロ（<a href="https://x.com/x282665">@x282665</a>）</h3>
+<p>ブラウザで遊べる短いゲームを、ほぼ毎日1本公開している。フォロワー 16,053人。</p>
+<p>「超本格的書道ゲームを作りました」が、いいね 31,263、表示 23,249,407、保存 20,143（<a href="https://x.com/x282665/status/2114260593612066975">2026-10-25 16:39</a>）。色を混ぜるゲームはいいね 6,810、表示 593,459（<a href="https://x.com/x282665/status/2119354491804041300">11月8日</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-ok">ルールが一言</p>
+<h3>トモぞヴP（<a href="https://x.com/TomozoP">@TomozoP</a>）</h3>
+<p>操作が短いブラウザゲームを多数作っている。フォロワー 23,472人。</p>
+<p>Wikipediaの文字数を予想する「情報量ダービー」は、いいね 15,347、表示 810,620（<a href="https://x.com/TomozoP/status/2102677945580130558">2026-09-23 17:34</a>）。スワイプで牛が加速するページは、いいね 10,541、表示 3,046,264（<a href="https://x.com/TomozoP/status/2101863974048563334">9月21日</a>）。</p>
+</article>
+</section>
+
+<section>
+<h2>海外の5人</h2>
+<p class="meta">indie hacker / build in public として、数字が取れた人。Nasさん以外はフォロワーが多く、規模が日本側と揃わない。</p>
+
+<article class="person">
+<p class="mark mark-ok">デモ動画</p>
+<h3>Nas（<a href="https://x.com/NasNakarus">@NasNakarus</a>）</h3>
+<p>干し草500万本の中から針を1本探すゲームを作っている。フォロワー 12,023人。確認した海外5人のなかでは、いちばん少ない。</p>
+<p>発表投稿はいいね 191,783、表示 54,160,722（<a href="https://x.com/NasNakarus/status/2091156855774974333">2026-08-22 22:33</a>）。あとから新しいモードの続報も、いいね 83,512（<a href="https://x.com/NasNakarus/status/2098766830651191585">9月12日</a>）と 34,678（<a href="https://x.com/NasNakarus/status/2115146693889183955">10月28日</a>）まで伸びた。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-later">規模が大きい</p>
+<h3>Pieter Levels（<a href="https://x.com/levelsio">@levelsio</a>）</h3>
+<p>Hotelist（ホテル評価のサイト）や Infinite Slop（チャットで続くAI動画）など、一人で多数のサービスを出している。フォロワー 991,505人。</p>
+<p>予約サイトの評価がいつも高く見える、という問題から入った Hotelist の発表は、いいね 9,542、表示 3,742,185（<a href="https://x.com/levelsio/status/2091863677574009001">2026-08-24 21:22</a>）。Infinite Slop を作った報告は、いいね 6,888、表示 2,706,489（<a href="https://x.com/levelsio/status/2093754163343593802">8月30日</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-later">規模が大きい</p>
+<h3>Tibo（<a href="https://x.com/tibo_maker">@tibo_maker</a>）</h3>
+<p>動画や成長まわりの道具を複数作っている。フォロワー 217,848人。</p>
+<p>この期間に確認できた大きめの投稿は、短いジョーク（いいね 2,550、表示 296,297、<a href="https://x.com/tibo_maker/status/2098705723706269896">9月12日</a>）と、自分の投稿データから「今のXで何が効くか」を書いた投稿（いいね 1,334、表示 153,101、保存 2,535、<a href="https://x.com/tibo_maker/status/2109214987038216210">10月11日</a>）。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-later">規模がやや大きい</p>
+<h3>Rob Hallam（<a href="https://x.com/robj3d3">@robj3d3</a>）</h3>
+<p>SuperX などのサービスと、公開の制作イベント「The Build Games」を進めている。フォロワー 68,315人。</p>
+<p>確認できたなかで反応が大きかったのは、古いメタバース風の画面を出した投稿（いいね 3,788、表示 112,189、<a href="https://x.com/robj3d3/status/2096607576339476626">2026-09-06 23:32</a>）と、短い引用（いいね 1,083、表示 515,845、<a href="https://x.com/robj3d3/status/2094402039896068192">8月31日</a>）。記事に載っていた「何も作る前に表示 334,923」の投稿は、この調査では未確認。</p>
+</article>
+
+<article class="person">
+<p class="mark mark-later">規模が大きい</p>
+<h3>Marc Lou（<a href="https://x.com/marclou">@marclou</a>）</h3>
+<p>TrustMRR や DataFast など、複数のサービスを公開しながら作っている。フォロワー 423,399人。</p>
+<p>10月の売上内訳を並べた投稿は、いいね 2,285、表示 843,247（<a href="https://x.com/marclou/status/2116518324687573484">2026-10-31 22:11</a>）。「オンラインで1ドル稼ぐのに2年かかった」は、いいね 1,383、表示 87,331（<a href="https://x.com/marclou/status/2116089091582275585">10月30日</a>）。投稿中の売上は、こちらで帳簿を見ていない。</p>
+</article>
+</section>
+
+<section>
+<h2>違いと、共通する型</h2>
+<div class="scroll">
+<table>
+<thead>
+<tr><th></th><th>日本（確認した5人）</th><th>海外（確認した5人）</th></tr>
+</thead>
+<tbody>
+<tr><th>伸びやすい中身</th><td>すぐ使える道具、すぐ遊べる短いゲーム、実際の利用画面</td><td>デモ動画に加え、売上の内訳、作っている途中、自分のデータの教訓</td></tr>
+<tr><th>フォロワー</th><td>964人でも1万いいねを超える例がある</td><td>Nasさん（約1.2万人）以外は6万〜99万人</td></tr>
+<tr><th>広がる仕組み</th><td>遊んだ人が結果（点数や作品）を自分でも出したくなる</td><td>すでにある読者に、数字や途中経過を定期的に出す</td></tr>
+</tbody>
+</table>
+</div>
+<p>共通すること。何の投稿かが最初の1〜2行で分かる。画面や短いデモが添えてある。大きく伸びたあとに、新しい版やお詫び、新しいモードなどの続報を出している。保存（ブックマーク）がいいねに近い割合になることもある。</p>
+<p>同じ期間の別の12人の見方は、<a href="2026-11-11_x-indie-dev-buzz.html">十二鬼月の個人開発者は、なぜ目立っているか</a>にある。</p>
+</section>
+
+<section>
+<h2>確認できなかったこと</h2>
+<ul>
+<li>いいね数での検索絞り込みは、API側で使えなかった。同じ人の、より古い大きな投稿を取りこぼしている可能性はある。</li>
+<li>Rob Hallam さんの記事が書いていた「何も作る前に表示 334,923」の投稿は、特定できなかった（未確認）。</li>
+<li>表示回数は取得時点の値で、あとから増える。</li>
+</ul>
+<p class="note">出典: 各投稿のリンクは本文中。数字の取得は 2026-11-11 22:34〜22:40（日本時間）。候補は公開のウェブ記事とXの検索から拾い、いいね・リポスト・表示・保存はXの公開数字だけを使った。</p>
+</section>
+</main>
+</body>
+</html>
