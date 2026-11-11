@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ドパガキ問題集を、X の文章で伝える</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --code-bg: #f1ede7;
+  --ok: #23663f;
+  --later: #7a5300;
+  --no: #a33232;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --code-bg: #2a272e;
+    --ok: #86d9a8;
+    --later: #f2cc78;
+    --no: #f29a9a;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 0 0 16px;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin: 0 0 12px;
+  color: var(--accent);
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 20px 0 8px;
+}
+h3:first-of-type { margin-top: 8px; }
+p { margin: 0 0 10px; }
+ul, ol {
+  padding-left: 1.3em;
+  margin: 0 0 10px;
+}
+li { margin: 0 0 8px; }
+a { color: var(--accent); }
+strong { font-weight: 700; }
+code {
+  font-size: 0.88em;
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 6px;
+}
+.table-wrap { margin: 0 0 12px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr { display: block; width: 100%; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tbody tr {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin: 0 0 10px;
+  }
+  tbody td {
+    border-bottom: 0;
+    padding: 4px 0 8px;
+  }
+  tbody td:last-child { padding-bottom: 0; }
+  tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 700;
+  }
+}
+th, td {
+  padding: 8px 6px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+th {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+td.name { font-weight: 700; }
+.copy-box {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px 14px;
+  margin: 0 0 14px;
+}
+.copy-box h3 { margin: 0 0 6px; }
+.copy-box pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: var(--code-bg);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 8px 0 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+button.copy-btn {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--card);
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+button.copy-btn:focus-visible {
+  outline: 3px solid var(--later);
+  outline-offset: 2px;
+}
+.note-sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+.foot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+.sources-list li { font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>ドパガキ問題集を、X の文章で伝える</h1>
+<p class="lead">川岸宏司さんの X の記事を読み、ドパガキ問題集の宣伝に当てはめました。調べたのは 2026-11-11（日本時間）です。数字は、取れた公開データだけを使っています。無い数字は作っていません。</p>
+
+<section id="conclusion">
+  <h2>結論</h2>
+  <ol>
+    <li>川岸宏司さんの記事の要点は、「同じ主張でも、切り口を替えると読後の温度が変わる」です。文章力の正体は、切り口をいくつ持っているかだ、と書いています。記事は7つの書き方を挙げ、目的に合わせて選ぶよう勧めています（<a href="https://x.com/OnebookofMAG/status/2120262200149627320" target="_blank" rel="noopener">Xの投稿（川岸宏司さん）</a>）。</li>
+    <li>ドパガキ問題集では、売り文句を毎回増やしません。すでに公開している事実を、切り口を替えて出します。たとえば、登録なしで同梱の過去問が解けます。自作は無料で1冊・<strong>100問</strong>まで作れます。プラスは月<strong>1,000円</strong>です（<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ（公式サイト）</a>）。相手は、資格の勉強をしている人と、一人でアプリを出している人です。下書きは週に最大5本です。本人が確かめてから投稿します。</li>
+    <li>下書きは、週1回で最大5本まで用意する今の流れに、7つの切り口を足すのが、いちばん手間が少ないです。その場の依頼でも使えます。下書き役の AI は投稿しません。すでに見送りにした3つ（特定の試験の告知、低評価レビューを週次で投稿する案、実機デモ型の投稿を増やすこと）は、この案でもやりません。</li>
+  </ol>
+</section>
+
+<section id="words">
+  <h2>このページの言葉</h2>
+  <ul>
+    <li>切り口: 同じ内容を、別の入り口から書くことです。</li>
+    <li>直球型: 事実を、飾らずにまっすぐ書く書き方です。</li>
+    <li>特徴3リズム型: 特徴を3つ、短いリズムで重ねる書き方です。</li>
+    <li>再現VTR型: ある場面を、時刻やセリフが目に浮かぶように書く書き方です。</li>
+    <li>他者引用型: 自分ではなく、実際に言われた言葉で語る書き方です。作り話は使いません。</li>
+    <li>天秤対比型: 二つを並べて、違いを一目で見せる書き方です。</li>
+    <li>電卓型: 損得や量が分かるように、確認した数字で書く書き方です。</li>
+    <li>通訳型: 相手が知っている世界のたとえで、知らない話を訳す書き方です。</li>
+    <li>表示: 投稿が見られた回数です。保存は、ブックマークされた回数です。</li>
+    <li>固定投稿: プロフィールのいちばん上に固定している投稿です。</li>
+  </ul>
+</section>
+
+<section id="post">
+  <h2>ポストと記事の要点</h2>
+  <p>対象は、川岸宏司さん（X @OnebookofMAG）の投稿です。フォロワーは<strong>108,917</strong>人でした（2026-11-11 18:20頃のプロフィール）。投稿は 2026-11-11 06:07（日本時間）です（<a href="https://x.com/OnebookofMAG/status/2120262200149627320" target="_blank" rel="noopener">Xの投稿（川岸宏司さん）</a>）。</p>
+  <p>投稿の本文は短いリンクだけです。中身は X の記事「おもんない意見を、おもろい切口にする方法」にあります。反応は、いいね<strong>338</strong>、表示<strong>89,982</strong>、保存<strong>865</strong>、リポスト18、引用17、返信4でした（<a href="https://x.com/OnebookofMAG/status/2120262200149627320" target="_blank" rel="noopener">Xの投稿</a>）。</p>
+  <p>要点は次の3行です。</p>
+  <ol>
+    <li>著者は10年以上、経営者の文章を代筆してきました。言いたいことは、だいたい5つに収まるそうです。それでも飽きられなかった理由は、才能ではありません。同じ話の切り口を替え続けたからだ、と書いています。</li>
+    <li>お題の一文「言語化力が低い人は、仕事ができない」を、7つの技法で7通りに書いています。目的に合わせて選ぶ、という整理です。文章力の正体は語彙ではなく、「同じ一文を何通りで書けるか」の在庫だ、としています。</li>
+    <li>記事の末尾に、同氏の note の記事への案内があります（<a href="https://note.com/onebookof_mag/n/n86aa3f232634" target="_blank" rel="noopener">note の記事</a>、2026年4月1日）。これはつながる記事として紹介します。投稿の本題は書き方の解説です。今回の案は、その解説だけを土台にします。</li>
+  </ol>
+  <p class="note-sub">記事の本文は、X の公開読み取りで取れました。note も本文を読めました。X の記事の表紙画像は、今回は開いていません。文章は本文で足りています。</p>
+</section>
+
+<section id="techniques">
+  <h2>7つの技法</h2>
+  <p class="note-sub">記事の整理を、そのまま写しています。右の列は記事の言葉です。</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:32%">技法</th>
+          <th style="width:68%">向く目的</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="技法">直球型</td>
+          <td data-label="向く目的">早く理解してほしいとき。謝罪や障害の報告など、心を動かしてはいけない文にも使います。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">特徴3リズム型</td>
+          <td data-label="向く目的">あるあるでうなずいてほしいとき。3連は「当てはまる人が段階的に増える網」です。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">再現VTR型</td>
+          <td data-label="向く目的">情景で感情を動かしたいとき。欲しいのは意見より、実際のセリフと時刻です。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">他者引用型</td>
+          <td data-label="向く目的">説教臭さを消したいとき。作り話は一発でばれるので、実話だけを使います。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">天秤対比型</td>
+          <td data-label="向く目的">違いを一瞬で見せたいとき。使いすぎると飽きられます。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">電卓型</td>
+          <td data-label="向く目的">損得で行動を変えさせたいとき。数字が雑だと、文章ごと疑われます。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="技法">通訳型</td>
+          <td data-label="向く目的">記憶に残したいとき。たとえは相手の世界から拾います。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="policy">
+  <h2>ドパガキ問題集に当てはめた方針</h2>
+
+  <h3>宣伝の材料にする公開事実</h3>
+  <p>紹介ページ、トップ、App Store の公開ページから写しました（<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ（公式サイト）</a>、<a href="https://dopagakiquiz.com/" target="_blank" rel="noopener">ドパガキ問題集（公式サイト）</a>、<a href="https://apps.apple.com/jp/app/id6819903680" target="_blank" rel="noopener">App Store（ドパガキ問題集）</a>）。宣伝には、これだけを使います。</p>
+  <ul>
+    <li>Web と iPhone アプリがあります。X の案内アカウントは @dopagaki_quiz です。</li>
+    <li>同梱の過去問は、アカウント登録なしで無料です。ITパスポート、基本情報技術者、情報セキュリティマネジメント、登録販売者、FP3級です。紹介ページの時点で、5つの試験で30冊・<strong>2,183問</strong>あります（<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ</a>）。</li>
+    <li>共通テスト対策の数学Ⅰ・Aは、7冊・228問（オリジナル）です。単語帳は、ビジネス英単語1冊・1,230語と、共通テスト英語3冊・1,273語です（<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ</a>）。</li>
+    <li>自分の問題集も作れます。無料プランは1冊・合計<strong>100問</strong>までです。プラスは月額<strong>1,000円</strong>（税込）で、自作の冊数と問題数にプランの上限がありません。同梱の過去問と英単語は、どのプランでも無料です（<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ</a>）。</li>
+    <li>紹介ページは、使い方を次のように案内しています。1問ずつ解きます。選んだあとに正解と解説を見ます。間違えた問題は、日をあけて見直します。</li>
+    <li>App Store の題名は「ドパガキ問題集」で、無料です。販売元は Shuya Amano です。バージョンは 1.1.1 です（2026-11-11 に取得）。ストア説明では、対象は18歳以上です。評価は0件でした（<a href="https://apps.apple.com/jp/app/id6819903680" target="_blank" rel="noopener">App Store</a>）。評価の星や利用者数は、宣伝に使いません。</li>
+  </ul>
+  <p><strong>使ってはいけない言い方</strong>: 合格保証、ダウンロード数、利用者数、レビューの星、使っていない古いサイトのアドレス、出ていない機能、作り方（どの AI で書いたか）。数字は、画面で確かめたものだけを使います。無い値は「未取得」か穴埋めにします。見本でも、存在しない数字は書きません。</p>
+
+  <h3>誰に、何を、どの頻度で</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:24%">項目</th>
+          <th style="width:76%">方針</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="項目">誰に</td>
+          <td data-label="方針">資格試験を勉強している人です。とくに、ITパスポートや基本情報など、同梱の過去問がある試験の人です。定期テストや大学の試験用に、自分の問題集を作りたい人も入ります。同じように一人でアプリを出している人は、返事や引用の相手です。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="項目">何を</td>
+          <td data-label="方針">上の公開事実を、7つの切り口で書き分けます。毎回、新しい特典は足しません。固定投稿には、何のアプリか、誰向けか、公開してよい数字を1〜2個、入手方法（公式サイトと App Store）を書きます。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="項目">どの頻度</td>
+          <td data-label="方針">1日に何十件も出しません。週1回、下書きを最大5本まで用意します。本人が確認してから投稿します。本物の数字や作っている途中を画像つきで出すのは、週1回までを目安にします。画像は本番の画面を撮ります。ほかの個人開発者への返事は、中身のあるものを1日に数件までにします。ノルマのための投稿だけは増やしません。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>見送りの3つ（この案でもやらない）</h3>
+  <p>すでに見送りになっていることが、次の3つです。この案にも入れません。</p>
+  <ul>
+    <li>CCNP の SNS 告知</li>
+    <li>低評価レビューを、週次で X の下書きにすること</li>
+    <li>実機デモ型の投稿を増やすこと（現状維持）</li>
+  </ul>
+
+  <h3>バズ分析で使う型と、使わない型</h3>
+  <p>同じ日にまとめた、個人開発者の目立ち方の分析から選びました（<a href="https://shuyaofficial.github.io/grokbot-output/2026-11-11_x-indie-dev-buzz.html" target="_blank" rel="noopener">GitHub Pages（十二鬼月の分析）</a>）。</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:24%">区分</th>
+          <th style="width:76%">型</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="区分">使う</td>
+          <td data-label="型">固定投稿を整えます。確認した数字や作っている途中を、画像つきで出します。ほかの人へ本物の返事をします。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="区分">使わない</td>
+          <td data-label="型">実機デモ型の投稿は増やしません。すでに見送りになっています。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>週1の下書きの流れとのつなぎ</h3>
+  <p>いま、下書き役の AI が週1回、SNS の下書きを最大5本まで用意する流れがあります。内訳の目安は、X 3本、Threads 1本、YouTube 概要欄 1本です。新しい定期作業は増やしません。今の手順に、次を足す案です。</p>
+  <ol>
+    <li>下書きを書く前に、このページの7つの切り口と、見送りの3つを読みます。</li>
+    <li>週の X 3本は、同じ週に同じ切り口を重ねません。7つのうちから3つを選びます。電卓型は、その週に確認できた数字があるときだけ使います。他者引用型は、本人が実際に言われた言葉か、公開されている引用を渡されたときだけ使います。</li>
+    <li>5本の下書きを用意します。本人へは短い案内だけを返します。投稿も予約もしません。</li>
+    <li>本人が確認し、直して、自分で投稿します。</li>
+    <li>週の途中で「この話題で1本ほしい」と頼まれたら、下書き役の AI が同じ依頼文の型で下書きを返します。それは週次の5本には混ぜません。週次の本数を超えないためです。</li>
+  </ol>
+</section>
+
+<section id="prompts">
+  <h2>依頼文の例（5つ）</h2>
+  <p class="note-sub">下書き役の AI に頼む文です。コピーして、そのまま貼れます。数字は、出す前に紹介ページか自分の画面で確かめてください。</p>
+
+  <div class="copy-box">
+    <h3>例1 同じ事実を7通りに書く</h3>
+    <pre id="prompt-1">ドパガキ問題集の X 投稿を考えます。川岸宏司さんの記事「おもんない意見を、おもろい切口にする方法」の7つの切り口（直球、特徴の3連、現場の再現、他者の言葉、二つの対比、数字、相手の世界への言い換え）で、次の公開事実だけを使って、同じ内容の投稿を7案書いてください。事実に無い数字・効果・体験談は書かないでください。絵文字なし。各案は280字以内。末尾に公式サイト https://dopagakiquiz.com/ を付けてください。旧ドメインは使わないでください。合格保証、ダウンロード数、利用者数、レビューの星は書かないでください。出ていない機能も書かないでください。
+
+使ってよい事実:
+- 同梱の過去問は登録なしで無料（ITパスポート、基本情報技術者、情報セキュリティマネジメント、登録販売者、FP3級）
+- 紹介ページ時点の冊数と問数: 過去問30冊・2,183問（ここは紹介ページで確認した数字だけ）
+- 自作は無料で1冊・合計100問まで
+- プラスは月1,000円（税込）。同梱の過去問と英単語はどのプランでも無料
+- Web と iPhone アプリがある</pre>
+    <button type="button" class="copy-btn" data-target="prompt-1">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例2 週の下書きをまとめて頼む</h3>
+    <pre id="prompt-2">今週の X 向け下書きを3本、Threads 向けを1本、書いてください。3本の X は、切り口を重ねないでください（直球、特徴の3連、現場の再現、二つの対比、数字、相手の世界への言い換え、から選ぶ）。他者の言葉は、下に実在の引用が無いので使わないでください。電卓型を使うなら、下の「確認した数字」だけを使い、無い項目は「（ここに数字）」と穴埋めにしてください。絵文字なし。280字以内。公式サイト https://dopagakiquiz.com/ を付けてください。
+
+書いてはいけないこと:
+- CCNP の告知
+- 低評価レビューへの返事を投稿する案
+- 実機デモを増やす前提の文
+- 合格保証、利用者数、レビューの星、旧ドメイン、出ていない機能
+- 実在しない数字
+
+確認した数字:
+（ここに、紹介ページまたは画面で確かめた数字だけを書く。無ければ「なし」）
+
+今週伝えたいこと:
+（例: 同梱の過去問は登録なしで無料、1問ずつ思い出してから解説を読む）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-2">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例3 ほかの個人開発者への返事</h3>
+    <pre id="prompt-3">次の投稿へ返事します。お礼の定型文ではなく、相手の内容に触れた2〜4行にしてください。売り込みはしないでください。ドパガキ問題集の話は、相手の内容と自然につながるときだけ、1行以内にしてください。絵文字なし。
+
+相手の投稿:
+（ここに相手の文を貼る）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-3">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例4 固定投稿</h3>
+    <pre id="prompt-4">X の固定投稿の文を書いてください。対象は、資格試験を勉強している人と、同じように一人でアプリを出している人です。次をこの順で入れてください。絵文字なし。長い前置きは不要です。
+
+- 何のアプリか（資格の問題集。過去問を解いて、自分の問題集も作れる）
+- 誰向けか
+- 公開してよい事実を1〜2個（登録なしで同梱の過去問が解ける、自作は無料で1冊・100問まで、など。確認した数字だけ）
+- 入手方法（公式サイトと iPhone アプリ。リンクは後で自分で足してよい）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-4">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例5 2案の比較</h3>
+    <pre id="prompt-5">同じ内容の X 投稿の案が2つあります。資格の勉強をしている人が最後まで読みそうな方を選び、理由を3行で書いてください。選ばなかった方の、使った方がよい一文があれば1つだけ抜き出してください。新しい文は足さないでください。事実に無い数字がどちらかに入っていたら、その案は選ばず、理由に書いてください。
+
+案A:
+（貼る）
+
+案B:
+（貼る）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-5">コピー</button>
+  </div>
+</section>
+
+<section id="drafts">
+  <h2>投稿の下書き例（5本）</h2>
+  <p class="note-sub">口調は標準語の、短い話し言葉です。公式サイトのリンクを付けています。確認していない数字は書いていません。数字の出典は<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ（公式サイト）</a>です。</p>
+
+  <div class="copy-box">
+    <h3>下書き1 直球型</h3>
+    <pre id="draft-1">ドパガキ問題集は、ITパスポートや基本情報などの過去問を、登録なしで無料で解けます。自分の問題集も、無料で1冊・100問まで作れます。Web と iPhone アプリがあります。
+
+https://dopagakiquiz.com/</pre>
+    <button type="button" class="copy-btn" data-target="draft-1">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>下書き2 特徴3リズム型</h3>
+    <pre id="draft-2">登録しない。支払いもしない。本棚を開いて、今日の1問から始める。
+
+同梱の過去問は、ITパスポート・基本情報・情報セキュリティマネジメント・登録販売者・FP3級です。紹介ページの時点で、30冊・2,183問と書いてあります。単語帳もあります。
+
+https://dopagakiquiz.com/about</pre>
+    <button type="button" class="copy-btn" data-target="draft-2">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>下書き3 再現VTR型</h3>
+    <pre id="draft-3">金曜の夜に「週末にまとめよう」と思って、月曜の朝を迎えたことはありませんか。
+
+1問だけ選んで、自分で答えてから解説を読む。間違えたら、印だけ付ける。残りは明日でよい、という進め方があります。
+
+ドパガキ問題集は、その1問を、登録なしで始められます。
+
+https://dopagakiquiz.com/</pre>
+    <button type="button" class="copy-btn" data-target="draft-3">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>下書き4 天秤対比型</h3>
+    <pre id="draft-4">全部を一度に読み返す勉強と、1問ずつ思い出してから解説を読む勉強。
+
+後者の方が残りやすい、という研究の案内を、紹介ページに書いてあります。まずは同梱の過去問から、今日の1問だけ試せます。登録は要りません。
+
+https://dopagakiquiz.com/about</pre>
+    <button type="button" class="copy-btn" data-target="draft-4">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>下書き5 電卓型（公開ページの数字だけ）</h3>
+    <pre id="draft-5">プラスは月1,000円（税込）です。同梱の過去問 2,183問とビジネス英単語 1,230語は、どのプランでも無料です。自分で作る分は、無料プランで1冊・合計100問までです。
+
+この数字は、紹介ページに書いてあるものです。利用者の人数や売上は、ここには書きません。
+
+https://dopagakiquiz.com/about</pre>
+    <button type="button" class="copy-btn" data-target="draft-5">コピー</button>
+    <p class="note-sub" style="margin:10px 0 0">「今週追加した科目の数」など、公開ページに無い数字を足すときは、確認した値を「（ここに数字）」と置き換えてから投稿してください。</p>
+  </div>
+</section>
+
+<section id="flow">
+  <h2>自動化の流れ（下書きまで）</h2>
+  <p class="note-sub">下書き役の AI が作るのは下書きまでです。投稿は本人が自分でします。AI は投稿しません。</p>
+  <ol>
+    <li><strong>材料を集める（週1）。</strong>下書き役の AI が、前週の SNS の数字、今週の話題、使ってはいけない言い方、見送りの3つを読みます。確認できた数字だけをメモします。無い値は「未取得」と書きます。</li>
+    <li><strong>下書きを書く（週1）。</strong>同じ担当が、依頼文の例2を使って最大5本を書きます。</li>
+    <li><strong>確認する。</strong>本人が本文を読み、数字と使ってはいけない言葉を確かめます。直してもかまいません。予約投稿にするかどうかも、本人が決めます。</li>
+    <li><strong>投稿する。</strong>本人が自分の手で X（や Threads、YouTube）に出します。下書き役の AI は、投稿、予約、いいね、フォローをしません。</li>
+    <li><strong>週の途中の追加。</strong>本人が、例1・例3・例4のような依頼文で頼みます。返った下書きも、確認してから本人が投稿します。週次の5本とは別に扱います。</li>
+    <li><strong>振り返る。</strong>次の週の下書きのときに、前週に出した投稿の数字を1行で書きます。伸びた切り口を、次の週の選びに使います。新しい定期配信は、この案では増やしません。</li>
+  </ol>
+</section>
+
+<section id="sources">
+  <h2>詳しく</h2>
+  <ul class="sources-list">
+    <li><a href="https://shuyaofficial.github.io/grokbot-output/2026-11-11_x-indie-dev-buzz.html" target="_blank" rel="noopener">個人開発者のバズ分析（GitHub Pages・公開版）</a>: 使う型と使わない型の元になった分析です。</li>
+    <li><a href="https://note.com/onebookof_mag/n/n86aa3f232634" target="_blank" rel="noopener">note の記事（川岸宏司さん）</a>: X の記事の末尾から、つながっている記事です。</li>
+  </ul>
+
+  <h2 style="margin-top:20px">出典</h2>
+  <ul class="sources-list">
+    <li><a href="https://x.com/OnebookofMAG/status/2120262200149627320" target="_blank" rel="noopener">Xの投稿（川岸宏司さん、@OnebookofMAG）</a>: 2026-11-11 06:07（日本時間）。いいね338、表示89,982、保存865です。記事のタイトルは「おもんない意見を、おもろい切口にする方法」です。</li>
+    <li><a href="https://note.com/onebookof_mag/n/n86aa3f232634" target="_blank" rel="noopener">note の記事（DIL川岸宏司）</a>: 2026年4月1日。RE:WORD の案内です。2026-11-11 に本文を取得しました。</li>
+    <li><a href="https://dopagakiquiz.com/" target="_blank" rel="noopener">ドパガキ問題集（公式サイト）</a>と<a href="https://dopagakiquiz.com/about" target="_blank" rel="noopener">紹介ページ（公式サイト）</a>: 2026-11-11 に取得しました。</li>
+    <li><a href="https://apps.apple.com/jp/app/id6819903680" target="_blank" rel="noopener">App Store（ドパガキ問題集、id6819903680）</a>: 2026-11-11 に公開情報を取得しました。</li>
+
+  </ul>
+  <p class="foot">調査日: 2026-11-11（日本時間）。投稿・いいね・フォローはしていません。</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function markCopied(btn) {
+    btn.textContent = 'コピーしました';
+  }
+
+  function markFailed(btn) {
+    btn.textContent = 'コピーできませんでした';
+  }
+
+  document.querySelectorAll('button.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (!target) return;
+      var text = target.textContent;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          markCopied(btn);
+        }).catch(function () {
+          if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+        });
+      } else {
+        if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
