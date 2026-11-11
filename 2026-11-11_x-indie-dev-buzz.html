@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>十二鬼月の個人開発者は、なぜ目立っているか</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --code-bg: #f1ede7;
+  --ok: #23663f;
+  --later: #7a5300;
+  --no: #a33232;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --code-bg: #2a272e;
+    --ok: #86d9a8;
+    --later: #f2cc78;
+    --no: #f29a9a;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 0 0 16px;
+}
+h2 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin: 0 0 12px;
+  color: var(--accent);
+}
+h3 {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 20px 0 8px;
+}
+h3:first-of-type { margin-top: 8px; }
+p { margin: 0 0 10px; }
+ul, ol {
+  padding-left: 1.3em;
+  margin: 0;
+}
+li { margin: 0 0 8px; }
+a { color: var(--accent); }
+strong { font-weight: 700; }
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 0 0 12px;
+}
+.card h3 { margin-top: 0; }
+.card ul { list-style: none; padding-left: 0; }
+.card li { padding-left: 0; }
+.tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1px 9px;
+  margin-right: 6px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.tag.ok { color: var(--ok); }
+.tag.later { color: var(--later); }
+.tag.no { color: var(--no); }
+.label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.table-wrap { margin: 0 0 12px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr { display: block; width: 100%; }
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  tbody tr {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin: 0 0 10px;
+  }
+  tbody td {
+    border-bottom: 0;
+    padding: 4px 0 8px;
+  }
+  tbody td:last-child { padding-bottom: 0; }
+  tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 700;
+  }
+}
+th, td {
+  padding: 8px 6px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+th {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+td.name { font-weight: 700; }
+.src { font-size: 0.82rem; color: var(--muted); }
+.copy-box {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px 14px;
+  margin: 0 0 14px;
+}
+.copy-box h3 { margin: 0 0 6px; }
+.copy-box pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: var(--code-bg);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 8px 0 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+button.copy-btn {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--card);
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+button.copy-btn:focus-visible {
+  outline: 3px solid var(--later);
+  outline-offset: 2px;
+}
+.note-sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+.foot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+.sources-list li { font-size: 0.95rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>十二鬼月の個人開発者は、なぜ目立っているか</h1>
+<p class="lead">いわゆる「十二鬼月」の12人の個人開発者を、X の公開データで調べました。数字はすべて 2026-11-11 15:42〜15:47（日本時間）に取ったものです。</p>
+
+<section id="conclusion">
+  <h2>結論</h2>
+  <ol>
+    <li>12人はすべて特定できました。目立ち方は大きく2つです。1つは、アプリやゲームの成果を数字で見せる型です。もう1つは、毎日たくさん投稿し、ほかの人の投稿に返事や引用をする型です。両方をやっている人も多いです。</li>
+    <li>いちばん反応が大きかったのは、aq さんの「好きな人と一緒にいる時間を記録できるアプリ」の投稿です。いいね<strong>20,263</strong>、表示<strong>2,140,881</strong>、保存<strong>16,359</strong>でした（<a href="https://x.com/aqhayami/status/2120079303782400077" target="_blank" rel="noopener">Xの投稿（aq さん）</a>、2026-11-10 18:01）。なまはむくんさんは投稿の回数が少ないです。それでも、競艇ゲームのリリース1か月の報告（ダウンロード8.5万、売上1,347万円）は、いいね<strong>441</strong>、表示<strong>75,563</strong>になりました（<a href="https://x.com/manabi_ai0307/status/2119343052829667782" target="_blank" rel="noopener">Xの投稿（なまはむくんさん）</a>）。</li>
+    <li>真似するなら、投稿を1日100件に近づける必要はありません。まずプロフィールと固定投稿に「何のアプリか」を一言で書きます。週に1回、本物の数字か作っている途中を画像つきで出します。ほかの個人開発者の投稿に、本物の返事を数件します。</li>
+  </ol>
+</section>
+
+<section id="words">
+  <h2>このページの言葉</h2>
+  <ul>
+    <li>表示: 投稿がタイムラインや検索で見られた回数です。</li>
+    <li>保存: ブックマークされた回数です。</li>
+    <li>元投稿: リプライでもリポストでもない、自分から出した投稿です。引用は含みます。</li>
+    <li>直近7日: 取得時点からさかのぼった約7日です（2026-11-04 15:44頃〜11-11 15:44頃、日本時間）。リポストは数えていません。</li>
+    <li>固定投稿: プロフィールのいちばん上に固定している投稿です。</li>
+  </ul>
+  <p class="note-sub">投稿の時刻は、すべて日本時間に直してあります。</p>
+</section>
+
+<section id="list-source">
+  <h2>このリストは何か</h2>
+  <p>シングル丼さん（<a href="https://x.com/FRIENDS73539897" target="_blank" rel="noopener">X @FRIENDS73539897</a>）が「今1番熱い個人開発者って誰？」と聞きました。この投稿は、いいね63、表示9,387でした（<a href="https://x.com/FRIENDS73539897/status/2120356595511284084" target="_blank" rel="noopener">Xの投稿（シングル丼さん）</a>）。</p>
+  <p>コロッケさん（<a href="https://x.com/korokke_tech" target="_blank" rel="noopener">X @korokke_tech</a>）が、これに12人の名前で返事をしました。返事は、いいね14、表示1,514でした（<a href="https://x.com/korokke_tech/status/2120371652827791402" target="_blank" rel="noopener">Xの投稿（コロッケさん）</a>）。元のリストの文面と一致します。</p>
+  <p><strong>名前の注記:</strong> リストには「ぴかす」「キックス」と書いてあります。実際の表示名は「個人開発を始めたピカス」と「きっくす@ITエンジニア」です。界隈では同じ呼び名で話題にされています。本人と確認できる投稿もあるので、この2人として特定しました。</p>
+</section>
+
+<section id="twelve">
+  <h2>12人の一覧</h2>
+  <p class="note-sub">フォロワー数は 2026-11-11 15:45頃のプロフィールの数字です。直近7日の投稿数はリプライを含みます。</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:52%">呼び名（アカウント）</th>
+          <th style="width:48%">フォロワー／直近7日の投稿</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">なまはむくん（<a href="https://x.com/manabi_ai0307" target="_blank" rel="noopener">X @manabi_ai0307</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">2,817人／41件（うち元投稿22件）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">aq（<a href="https://x.com/aqhayami" target="_blank" rel="noopener">X @aqhayami</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">2,500人／239件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">ぱせりいぬ（<a href="https://x.com/paseriINU" target="_blank" rel="noopener">X @paseriINU</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">1,497人／1,309件（うち元投稿590件）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">ぴかす（<a href="https://x.com/1oveWolfgirl" target="_blank" rel="noopener">X @1oveWolfgirl</a>。表示名は「個人開発を始めたピカス」）</td>
+          <td data-label="フォロワー／直近7日の投稿">931人／719件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">何（<a href="https://x.com/ganma_cat" target="_blank" rel="noopener">X @ganma_cat</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">2,196人／492件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">ねこぶんぶんまる（<a href="https://x.com/cat_SI1" target="_blank" rel="noopener">X @cat_SI1</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">1,447人／481件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">テクノビビ（<a href="https://x.com/techno_bibi" target="_blank" rel="noopener">X @techno_bibi</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">4,632人／405件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">ニャットランド（<a href="https://x.com/karou2rikon" target="_blank" rel="noopener">X @karou2rikon</a>。表示名は「過労@にゃっとランドforX」）</td>
+          <td data-label="フォロワー／直近7日の投稿">4,901人／568件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">6番（<a href="https://x.com/Number6u" target="_blank" rel="noopener">X @Number6u</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">6,790人／852件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">キックス（<a href="https://x.com/kixking1020" target="_blank" rel="noopener">X @kixking1020</a>。表示名は「きっくす@ITエンジニア」）</td>
+          <td data-label="フォロワー／直近7日の投稿">4,099人／1,153件（うち元投稿124件）</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">セプト（<a href="https://x.com/septentrion_twx" target="_blank" rel="noopener">X @septentrion_twx</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">4,291人／799件</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="呼び名（アカウント）">シングル丼（<a href="https://x.com/FRIENDS73539897" target="_blank" rel="noopener">X @FRIENDS73539897</a>）</td>
+          <td data-label="フォロワー／直近7日の投稿">3,584人／824件</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ul>
+    <li>直近7日の投稿が少ないのは、なまはむくんさんだけです（41件）。ほかの11人は、1日あたり数十件から100件超を出しています。</li>
+    <li>きっくすさんは、元投稿が124件です。リプライを含めると1,153件になります。返事の量が、自分の投稿の量より大きいです。</li>
+  </ul>
+</section>
+
+<section id="two-ways">
+  <h2>2つの目立ち方</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">目立ち方</th>
+          <th style="width:66%">代表例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name" data-label="目立ち方">成果の数字を見せる</td>
+          <td data-label="代表例">aq さんのアプリ発表は、いいね20,263、表示2,140,881でした（<a href="https://x.com/aqhayami/status/2120079303782400077" target="_blank" rel="noopener">Xの投稿</a>）。なまはむくんさんのリリース1か月の報告は、いいね441、表示75,563でした（<a href="https://x.com/manabi_ai0307/status/2119343052829667782" target="_blank" rel="noopener">Xの投稿</a>）。どちらも、何ができるか、どれだけ使われたかを、画面と一緒に書いています。</td>
+        </tr>
+        <tr>
+          <td class="name" data-label="目立ち方">交流と投稿数で見つけてもらう</td>
+          <td data-label="代表例">ぱせりいぬさんは、直近7日で元投稿590件、リプライ込みで1,309件を出しています。きっくすさんは、1日のリプライを自分で数え、「リプ初の200をこえました」と書いています（<a href="https://x.com/kixking1020/status/2120144668067594599" target="_blank" rel="noopener">Xの投稿</a>）。ぱせりいぬさんの直近25件の元投稿は、いいねがおおむね10前後でした。1件ずつの反応は大きくありません。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>なまはむくんさんは、投稿が少なくても数字の投稿1件で大きく届いています。投稿の量だけが目立つ条件ではありません。</p>
+</section>
+
+<section id="people">
+  <h2>12人のカード</h2>
+
+  <div class="card">
+    <h3>なまはむくん（成果の数字を出す型）</h3>
+    <ul>
+      <li><span class="label">型</span>リリース後のダウンロード数、売上、店の順位を、画面の画像つきで出します。投稿総数は575件で、12人でいちばん少ないです。固定投稿はありません。</li>
+      <li><span class="label">目立つ投稿</span>リリース1か月の報告です。ダウンロード8.5万突破、サブスク（1000円）のトライアル1.1万、売上1,347万円、レビュー1,429件で星4.5、App Store のスポーツ4位・レース2位、アップデート15回と書いています。いいね441、表示75,563、保存214でした（<a href="https://x.com/manabi_ai0307/status/2119343052829667782" target="_blank" rel="noopener">Xの投稿</a>、2026-11-08 17:15）。</li>
+      <li><span class="label">目立つ投稿</span>リリース1週間の報告です。ダウンロード2万、売上156万円、スポーツ＆レース部門1位、レビュー285件で星4.5と書いています。いいね290、表示121,812、保存171でした（<a href="https://x.com/manabi_ai0307/status/2111035848582193408" target="_blank" rel="noopener">Xの投稿</a>、2026-10-16 19:05）。</li>
+      <li><span class="label">ほかの投稿</span>「大台突破」は、いいね292、表示173,484、保存142でした（<a href="https://x.com/manabi_ai0307/status/2117591455137239309" target="_blank" rel="noopener">Xの投稿</a>、2026-11-03 21:15）。リリース10日目の「200万」は、いいね295、表示79,102、保存117でした（<a href="https://x.com/manabi_ai0307/status/2111969094899826766" target="_blank" rel="noopener">Xの投稿</a>、2026-10-19 08:54）。1000円のサブスクで12日でトライアル1万人の報告は、いいね148、表示33,377でした（<a href="https://x.com/manabi_ai0307/status/2118162913328603526" target="_blank" rel="noopener">Xの投稿</a>、2026-11-05 11:06）。</li>
+      <li><span class="label">本人の説明</span>開発は約6週間でした。X・TikTok・Threads で、作っている途中を出していました。前に出した収支管理アプリのときのフォロワーが、約1,000人いました（<a href="https://x.com/manabi_ai0307/status/2119409739587321865" target="_blank" rel="noopener">Xの投稿</a>、<a href="https://x.com/manabi_ai0307/status/2119390635547607352" target="_blank" rel="noopener">Xの投稿</a>）。</li>
+      <li><span class="label">時間帯</span>大きな投稿は11時台と17時台に集まっていました。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>aq（成果の発表と、日常のやり取りの両方）</h3>
+    <ul>
+      <li><span class="label">型</span>アプリの発表を短く書きます。何ができるかと、安全性を書きます。引用と短い雑談も多いです。本人が「ポストノルマ達成したしちょっと昼寝してアプリ開発や」と書いており、投稿の量を意識しています（<a href="https://x.com/aqhayami/status/2119644696654082359" target="_blank" rel="noopener">Xの投稿</a>）。</li>
+      <li><span class="label">目立つ投稿</span>「好きな人と一緒にいる時間を記録できるアプリ」です。Bluetooth でつなぎ、カレンダーで振り返れます。通信は暗号化され、インターネットは要らないと書いています。いいね20,263、表示2,140,881、保存16,359、リポスト2,052、引用1,778でした（<a href="https://x.com/aqhayami/status/2120079303782400077" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 18:01）。今回確認できた中で最大の数字です。</li>
+      <li><span class="label">ほかの投稿</span>その後の「カテゴリーランキング入り出来ました」というお礼は、いいね226、表示18,494でした（<a href="https://x.com/aqhayami/status/2120152818518782422" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 22:53）。固定投稿は、この発表のスレッドで猫のドット絵の作者を紹介したものです。いいね61、表示73,972でした（<a href="https://x.com/aqhayami/status/2120186650752135560" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 01:07）。</li>
+      <li><span class="label">時間帯</span>大きな発表は夕方の18:01でした。日常の投稿は昼から夜まで散っています。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ぱせりいぬ（交流と投稿数の型。ゲームの置き場もある）</h3>
+    <ul>
+      <li><span class="label">型</span>短いブラウザゲームを次々に出します。自分でも遊び、ハッシュタグを付けて記録を投稿します。ほかの人の投稿をたくさん引用し、短い返事を返します。直近7日の元投稿だけで590件あります。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿の「ぱせりいぬゲームズ」の開設です。無料で、ダウンロードなしで、ブラウザですぐ遊べると書いています。いいね100、表示12,104、リポスト15でした（<a href="https://x.com/paseriINU/status/2110433031089774754" target="_blank" rel="noopener">Xの投稿</a>、2026-10-15 03:10）。</li>
+      <li><span class="label">そのほか</span>直近25件の元投稿は、引用と雑談が中心です。いいねはおおむね10前後でした。ゲームそのものより、「遊んだ記録がタイムラインに出る」仕組みが広がっています。</li>
+      <li><span class="label">時間帯</span>午前から夕方まで途切れにくいです。2026-11-11 も11時台から15時台まで続けて出していました。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ぴかす（検索で見つかる名前と、ゲームの公開）</h3>
+    <ul>
+      <li><span class="label">名前</span>リストでは「ぴかす」です。表示名は「個人開発を始めたピカス」です。アカウントは2015-09-23に作られた古いもので、最近この名前で使っています。</li>
+      <li><span class="label">型</span>ゲームの公開とアプリ化を報告します。ほかの人の投稿を引用し、励まします。表示名に「個人開発」を入れています。Npresso さんは、この表示名だと X の検索で「個人開発」の上位に出やすい、と書いていました。その投稿は、いいね76、表示14,384でした（<a href="https://x.com/npressoworks/status/2112173220736757838" target="_blank" rel="noopener">Xの投稿（Npresso さん）</a>、2026-10-19 22:25）。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿の、ブラウザ版「ドパ麻雀」の公開です。いいね169、表示32,466、引用41、リポスト49でした（<a href="https://x.com/1oveWolfgirl/status/2116813073365504009" target="_blank" rel="noopener">Xの投稿</a>、2026-11-01 17:42）。</li>
+      <li><span class="label">目立つ投稿</span>iOS と Android へのアプリ化の報告です。いいね101、表示6,638、リポスト42でした（<a href="https://x.com/1oveWolfgirl/status/2120336674471469500" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 11:03）。取得したときは、公開から数時間でした。</li>
+      <li><span class="label">ほかの投稿</span>自己紹介は、いいね84、表示3,407でした（<a href="https://x.com/1oveWolfgirl/status/2112159712821358820" target="_blank" rel="noopener">Xの投稿</a>、2026-10-19 21:31）。</li>
+      <li><span class="label">時間帯</span>アプリ化の報告は11:03、ブラウザ版の公開は17:42でした。夜の投稿も多いです。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>何（交流と投稿数の型）</h3>
+    <ul>
+      <li><span class="label">型</span>短い感想と引用が中心です。投稿総数は18,780件で、12人の中で多いほうです（きっくすさんの22,152件に次ぎます。きっくすさんのアカウントは2010年からあります）。固定投稿はありませんでした。</li>
+      <li><span class="label">周りの声</span>テクノビビさんは「誰よりも何さんがアクティブだから、この人に個人開発者系のコミュニティを作って欲しい」と書いていました（<a href="https://x.com/techno_bibi/status/2102049183645708566" target="_blank" rel="noopener">Xの投稿（テクノビビさん）</a>）。ほかの人の投稿では、「GitBub」を作った人として話題にされています（<a href="https://x.com/moltikuji/status/2074650071380238659" target="_blank" rel="noopener">Xの投稿</a>）。</li>
+      <li><span class="label">数字</span>今回の取得範囲（新しい元投稿25件）には、大きな数字の発表は入っていませんでした。古い大きな投稿の数字は、このページでは書いていません。</li>
+      <li><span class="label">時間帯</span>深夜から早朝と、午後から夜に出しています。2026-11-11 は11:57に「起きました」と投稿していました。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ねこぶんぶんまる（交流の型。ゲーム動画もある）</h3>
+    <ul>
+      <li><span class="label">型</span>引用と短い返事が多いです。役に立ちそうな投稿を、すぐに保存したと反応します。アカウントは2026-07-01に作られ、約4か月で投稿総数は5,745件です。</li>
+      <li><span class="label">目立つ投稿</span>「音速でブクマした」という引用です。いいね279、表示33,240、保存274でした（<a href="https://x.com/cat_SI1/status/2119496014784819324" target="_blank" rel="noopener">Xの投稿</a>、2026-11-09 03:23）。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿の、自作ゲームの動画「こんなゲーム作ってます」です。いいね54、表示23,503でした（<a href="https://x.com/cat_SI1/status/2110301238030184672" target="_blank" rel="noopener">Xの投稿</a>、2026-10-14 18:26）。</li>
+      <li><span class="label">そのほか</span>直近25件の元投稿は、引用が中心です。いいねはおおむね10前後でした。</li>
+      <li><span class="label">時間帯</span>夜から翌朝まで散っています。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>テクノビビ（今起きている出来事を速く伝える型）</h3>
+    <ul>
+      <li><span class="label">型</span>エンジニアの雑談と、自分の身に起きた出来事の実況です。2026-11-10 は、楽天アカウントの不正ログインを時刻つきで報告しました。問い合わせの経過も続けて出しました。固定投稿はありませんでした。</li>
+      <li><span class="label">目立つ投稿</span>楽天の不正ログインの報告です。時系列を順に書いています。いいね347、表示270,220、保存310、リポスト92でした（<a href="https://x.com/techno_bibi/status/2120122403699519688" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 20:52）。</li>
+      <li><span class="label">ほかの投稿</span>「オペレーターに繋がったが調査できないと言われた」という続きは、いいね175、表示19,298でした（<a href="https://x.com/techno_bibi/status/2120234352219136473" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 04:17）。「ログインの仕組みがおかしい」は、いいね140、表示15,810でした（<a href="https://x.com/techno_bibi/status/2120174468047983051" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 00:19）。</li>
+      <li><span class="label">時間帯</span>今回の大きな連投は、夜の20時台から翌早朝でした。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>ニャットランド（交流の型。分析ツールと子ども向けサイトもある）</h3>
+    <ul>
+      <li><span class="label">型</span>開発の途中（3Dモデルなど）を画像つきで出します。ほかの人の投稿を引用します。表示名は「過労@にゃっとランドforX」です。約1年で投稿総数は12,835件です。</li>
+      <li><span class="label">目立つ投稿</span>X の投稿を分析するツール「ニャットランド」の作者として、StudioYebisu さんに紹介されています。その紹介は、いいね163、表示8,819、保存233でした（<a href="https://x.com/studio_yebisu/status/2108786392386175016" target="_blank" rel="noopener">Xの投稿（StudioYebisu さん）</a>、2026-10-10 14:07）。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿は、小学2〜3年生向けの無料サイトの案内です。いいね41、表示2,691でした（<a href="https://x.com/karou2rikon/status/2118949156127744236" target="_blank" rel="noopener">Xの投稿</a>、2026-11-07 15:10）。</li>
+      <li><span class="label">ほかの投稿</span>サイトが全国に広がっているという投稿は、いいね28、表示815でした（<a href="https://x.com/karou2rikon/status/2120376639347712319" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 13:42）。直近25件の元投稿は、引用と制作メモが中心です。いいねはおおむね10〜20でした。</li>
+      <li><span class="label">時間帯</span>昼から深夜まで散っています。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>6番（交流の型。役に立つ注意喚起もある）</h3>
+    <ul>
+      <li><span class="label">型</span>仕事と日常の短い投稿です。「おはようございます」のような挨拶をします。質問を投げて返事を集めます。今起きている出来事を、自分の体験として出します。フォロワーは12人で最多の6,790人です。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿は、楽天から認証コードが届き、パスワードを初期化された報告です。ログイン履歴に自分以外はいなかった、と画像つきで書いています。いいね81、表示9,079、保存27でした（<a href="https://x.com/Number6u/status/2120356734959333863" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 12:23）。</li>
+      <li><span class="label">ほかの投稿</span>会議に毎回遅刻する相手への声のかけ方を聞いた質問は、いいね52、表示1,542でした（<a href="https://x.com/Number6u/status/2120131062261244313" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 21:26）。</li>
+      <li><span class="label">時間帯</span>朝の挨拶（2026-11-11 06:03）と、昼から夜の仕事の報告が混ざります。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>キックス（交流と投稿数の型。エンジニアあるあるの質問）</h3>
+    <ul>
+      <li><span class="label">名前</span>リストでは「キックス」です。表示名は「きっくす@ITエンジニア」です。ITエンジニア18年目で、アカウントは2010-06-05からあります。</li>
+      <li><span class="label">型</span>丁寧な挨拶から始めます。仕事あるあるの短い質問を投げ、返事を集めます。お弁当の写真も出します。直近7日は、元投稿124件に対してリプライ込みで1,153件です。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿の「金曜日の本番リリース禁止って、今もある？」です。いいね116、表示56,054でした（<a href="https://x.com/kixking1020/status/2120163318010671318" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 23:35）。</li>
+      <li><span class="label">ほかの投稿</span>自己紹介「一生ヘタレプログラマー」は、いいね85、表示6,555でした（<a href="https://x.com/kixking1020/status/2095059316781015097" target="_blank" rel="noopener">Xの投稿</a>、2026-09-02 17:00）。日時データの扱いの注意は、いいね69、表示2,896でした（<a href="https://x.com/kixking1020/status/2103634766818115988" target="_blank" rel="noopener">Xの投稿</a>、2026-09-26 08:56）。「Windowsはクソ、Macはクソ、Linuxは最強」という投げかけは、いいね58、表示2,197、リプライ19でした（<a href="https://x.com/kixking1020/status/2120131635744285039" target="_blank" rel="noopener">Xの投稿</a>、2026-11-10 21:29）。</li>
+      <li><span class="label">時間帯</span>朝の挨拶、昼のお弁当、夜の雑談がくり返されます。0時、11時、14時のような、きりの良い時刻の投稿もあります。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>セプト（交流の型。小さなゲームの企画も出す）</h3>
+    <ul>
+      <li><span class="label">型</span>ほかの人の投稿を引用し、短い感想を付けます。自分でも短い動画やゲームを出します。企画を出して、ほかの人に作ってもらいます。約6か月で投稿総数は7,152件です。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿の「ポン出し選手権」です。30秒で遊べるブラウザゲームを作って公開してほしい、という企画です。いいね86、表示4,239でした（<a href="https://x.com/septentrion_twx/status/2119261723924607121" target="_blank" rel="noopener">Xの投稿</a>、2026-11-08 11:52）。</li>
+      <li><span class="label">そのほか</span>直近25件の元投稿は、引用が中心です。いいねはおおむね10前後でした。</li>
+      <li><span class="label">時間帯</span>朝7時台の挨拶と、夜の引用が混ざります。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>シングル丼（交流の型。開発中のゲームもある）</h3>
+    <ul>
+      <li><span class="label">型</span>質問を投げて返事を集めます。短いネタも出します。開発の案内は固定投稿に置いています。今回の「今1番熱い個人開発者って誰？」も、この型です。Unity の VR ゲームを作っていて、AWS 認定12冠と書いています。</li>
+      <li><span class="label">目立つ投稿</span>固定投稿は、ゲームの攻略情報を出し合える「GameTown」を今年中に出す予定、という案内です。いいね425、表示16,369、リポスト27でした（<a href="https://x.com/FRIENDS73539897/status/2088293871625310329" target="_blank" rel="noopener">Xの投稿</a>、2026-08-15 00:57）。なまはむくんさんと aq さんを除くと、いいねが最も多い投稿のひとつです。</li>
+      <li><span class="label">目立つ投稿</span>今回の質問は、いいね63、表示9,387でした（<a href="https://x.com/FRIENDS73539897/status/2120356595511284084" target="_blank" rel="noopener">Xの投稿</a>、2026-11-11 12:23）。</li>
+      <li><span class="label">時間帯</span>午前中の投稿が多いです。夜の投稿もあります。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="patterns">
+  <h2>共通する型</h2>
+  <p class="note-sub">確認できた範囲で、くり返し見えた型です。全部を1人がやっているわけではありません。</p>
+  <ol>
+    <li>成果は、感想ではなく数字と画面で出します。ダウンロード、売上、店の順位、トライアルの人数を、画像と一緒に書きます（なまはむくんさん、aq さん）。</li>
+    <li>作っている途中を出します。完成を待ちません。なまはむくんさんは、6週間の開発中に途中を出していました。</li>
+    <li>動画か画像を付けます。固定投稿や大きな発表には、ゲームのデモやアプリの画面が付いていました。</li>
+    <li>ほかの人の投稿に、すぐ返事や引用をします。きっくすさんは1日のリプライを自分で数えていました。ぱせりいぬさんは直近7日で、元投稿590件、リプライ込み1,309件でした。</li>
+    <li>投稿の回数が多いです。なまはむくんさん以外は、直近7日で200件を超えています。ただし、なまはむくんさんは少ない投稿でも、数字の投稿1件で大きく届いています。</li>
+    <li>プロフィールと固定投稿を見れば、何を作っているかが一度でわかります。アプリ名、対象、リンクが書いてあります。ぴかすさんは表示名に「個人開発」を入れています。</li>
+    <li>今起きている出来事を、自分の体験としてすぐ出します。テクノビビさんと6番さんの楽天の報告は、数時間で数千から数十万の表示になりました。</li>
+    <li>互いに広げ合っています。ほかの人がぱせりいぬさんのゲームを遊び、ぴかすさんのアプリ化を引用し、楽天の注意を引用しています。</li>
+  </ol>
+  <p>12人に共通する「この時刻に出せば伸びる」という時間は、見つかりませんでした。朝の挨拶、昼、夕方の発表、深夜の雑談が混ざっています。時刻より、続けることと中身（数字、デモ、今の出来事）のほうが、はっきり効いていました。</p>
+</section>
+
+<section id="todo">
+  <h2>今日からできること（優先順）</h2>
+  <p class="note-sub">資格の問題集アプリを一人で出している人向けです。量ではなく、型を真似する手順です。</p>
+  <ol>
+    <li><strong>今日やる。</strong>プロフィールを「誰向けの、何のアプリか」の一文にします。固定投稿に、アプリの画面1枚と、今の本物の数字（登録人数、冊数、問題数）と、入手方法を書きます。誇張はしません。</li>
+    <li><strong>今週やる。</strong>数字か、作っている途中を、画像つきで1回出します。たとえば「今週追加した科目」「音声の本数」「直近30日に使った人数」です。小さな数字で構いません。なまはむくんさんも、大きな数字の前に制作の途中を出していました。</li>
+    <li><strong>毎日やる。</strong>個人開発者の投稿に、本物の返事を3件まで書きます。感想のコピペにはしません。使ってみたこと、似た悩み、質問のどれかにします。1日100件は目指しません。</li>
+    <li><strong>出荷のときにやる。</strong>新しい機能や科目を出したら、短い画面録画か、続きの画像を付けます。aq さん、ぴかすさん、ねこぶんぶんまるさんの大きな投稿には、アプリの説明かデモが付いていました。</li>
+    <li><strong>やらないこと。</strong>フォロワー数を盛らないでください。まだ出ていない売上を予告しないでください。「ノルマのための投稿」だけを増やさないでください。aq さんもノルマという言葉を使っています。それでも、いちばん届いたのはノルマの投稿ではなく、アプリの発表でした。</li>
+  </ol>
+</section>
+
+<section id="prompts">
+  <h2>AIへの依頼文（8例）</h2>
+  <p class="note-sub">下の文をコピーして、AI にそのまま貼れます。数字は、出す前に自分の画面で確かめてください。</p>
+
+  <h3>投稿の下書き</h3>
+
+  <div class="copy-box">
+    <h3>例1 数字の報告</h3>
+    <pre id="prompt-1">私は24歳のネットワークエンジニアで、資格の問題集アプリを個人開発しています。
+次の本物の数字だけを使って、X用の投稿を1つ書いてください。誇張や絵文字は使わないでください。読み手は同じように個人でアプリを出している人です。冒頭で何のアプリかを一言書いてください。画面のスクリーンショットを1枚添える前提で、本文は280字以内にしてください。
+
+数字:
+- 登録: （ここに確認した人数を入れる）
+- 問題集: （冊数と問題数）
+- 直近30日に使った人: （ここに確認した人数を入れる）
+- 今週やったこと: （例: 新しい科目の音声を出した）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-1">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例2 作っている途中</h3>
+    <pre id="prompt-2">今作っている途中の話を、完成を待たずにXへ出したいです。次の事実だけを使って、投稿を1つ書いてください。自慢に聞こえないように、今つまずいていることも1行入れてください。280字以内。絵文字なし。
+
+事実:
+- 作っているもの: 資格の問題集アプリ
+- いま取り組んでいること: （例: ある問題の解説が正しく出ない）
+- つまずいていること: （例: 直しはできたが、まだ公開していない）
+- 次にやること: （例: 公開前の確認）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-2">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例3 ほかの人への返事</h3>
+    <pre id="prompt-3">次の投稿に返事します。お礼の定型文ではなく、相手の内容に触れた2〜4行の返事を書いてください。売り込みはしないでください。自分のアプリの話は、相手の内容と自然につながるときだけ、1行以内にしてください。
+
+相手の投稿:
+（ここに相手の文を貼る）
+
+自分の状況（使う場合だけ）:
+（例: 同じように一人でアプリを出していて、使ってもらう段階で苦労している）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-3">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例4 固定投稿</h3>
+    <pre id="prompt-4">Xの固定投稿の文を書いてください。対象は、資格試験の勉強をしている人と、同じように個人でアプリを出している人です。次をこの順で入れてください。絵文字なし。長い前置きは不要です。
+
+- 何のアプリか（資格の問題集。問題を解いて解説を読める）
+- 誰向けか
+- 今の本物の数字を1〜2個（確認した数字だけ）
+- 入手方法の案内（リンクは後で自分で足す）
+- これから出したいものがあれば1行（まだ出ていないことは「予定」と書く）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-4">コピー</button>
+  </div>
+
+  <h3>アプリ開発と作業の効率化</h3>
+
+  <div class="copy-box">
+    <h3>例5 機能の切り出し</h3>
+    <pre id="prompt-5">資格の問題集アプリを一人で保守しています。次の不具合を直すとき、最初に触る場所の見当と、確認手順の短いリストを出してください。コードを書く前に、直し方の方針を3つまで比較し、いちばん安全なものを勧めてください。
+
+不具合:
+（例: 一部の問題で解説が表示に失敗する。別の科目では直したあと問題なく動いている）
+
+制約:
+- 本番で動いているほかの科目を壊したくない
+- まずテストで確認してから出したい</pre>
+    <button type="button" class="copy-btn" data-target="prompt-5">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例6 画面の撮影手順</h3>
+    <pre id="prompt-6">Xに載せるための、アプリの画面の撮り方を、チェックリストにしてください。私は資格の問題集アプリを出しています。写真は3枚以内。1枚目は問題を解いている画面、2枚目は解説、3枚目は今回伝えたい数字（ダウンロードや登録ではなく、今ある本物の数字）です。個人情報や他人の名前が写らないように、隠すべき場所も書いてください。</pre>
+    <button type="button" class="copy-btn" data-target="prompt-6">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例7 週1回の振り返り投稿</h3>
+    <pre id="prompt-7">今週の作業メモから、X用の短い振り返り投稿を1つ書いてください。数字はメモにあるものだけ使ってください。メモにない売上やフォロワーの増加は書かないでください。280字以内。絵文字なし。
+
+今週のメモ:
+（ここに自分のメモを貼る）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-7">コピー</button>
+  </div>
+
+  <div class="copy-box">
+    <h3>例8 2案の比較</h3>
+    <pre id="prompt-8">同じ内容のX投稿の案が2つあります。個人開発のタイムラインで、最後まで読まれやすそうな方を選び、理由を3行で書いてください。選ばなかった方の、使った方がよい一文があれば1つだけ抜き出してください。新しい文は足さないでください。
+
+案A:
+（貼る）
+
+案B:
+（貼る）</pre>
+    <button type="button" class="copy-btn" data-target="prompt-8">コピー</button>
+  </div>
+</section>
+
+<section id="unknown">
+  <h2>取れなかったこと</h2>
+  <ul>
+    <li>いいね数で投稿を絞り込む検索は、公開の X 検索では使えませんでした。そのため、反応の多い投稿は、固定投稿と、各アカウントの新しい元投稿（1回あたり最大25件）から拾いました。</li>
+    <li>何さん、ぱせりいぬさん、ニャットランドさん、セプトさんなどは、もっと古い大きな投稿が、この範囲の外にあるかもしれません。その数字は推測で補っていません。</li>
+    <li>ぴかすさんの固定投稿は、プロフィールを取ったときは「見つからない」と返りました。投稿を直接取ると読めました。</li>
+    <li>調査のために、投稿・いいね・フォローはしていません。</li>
+  </ul>
+</section>
+
+<section id="sources">
+  <h2>出典</h2>
+  <ul class="sources-list">
+    <li><a href="https://x.com/korokke_tech/status/2120371652827791402" target="_blank" rel="noopener">Xの投稿（コロッケさん、@korokke_tech）</a>: 12人のリストの元です。</li>
+    <li><a href="https://x.com/FRIENDS73539897/status/2120356595511284084" target="_blank" rel="noopener">Xの投稿（シングル丼さん、@FRIENDS73539897）</a>: 「今1番熱い個人開発者って誰？」の問いかけです。</li>
+    <li>各アカウントのプロフィールと投稿: 本文中の X のリンクです。</li>
+    <li>直近7日の件数: X の投稿数を数える API で取りました（2026-11-11 15:44〜15:46、日本時間）。</li>
+  </ul>
+  <p class="foot">調査日時: 2026-11-11 15:42〜15:47（日本時間）。X の公開データから取得しました。</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function markCopied(btn) {
+    btn.textContent = 'コピーしました';
+  }
+
+  function markFailed(btn) {
+    btn.textContent = 'コピーできませんでした';
+  }
+
+  document.querySelectorAll('button.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (!target) return;
+      var text = target.textContent;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          markCopied(btn);
+        }).catch(function () {
+          if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+        });
+      } else {
+        if (fallbackCopy(text)) { markCopied(btn); } else { markFailed(btn); }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
