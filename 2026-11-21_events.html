@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIイベント 早わかり（11/21）</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --ok: #23663f;
+  --ok-bg: #e5f3ea;
+  --alert: #8a3b12;
+  --alert-bg: #fbeee6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --ok: #86d9a8;
+    --ok-bg: #1b2e25;
+    --alert: #f2b98f;
+    --alert-bg: #33241b;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  overflow-x: hidden;
+}
+h1 {
+  font-size: 1.35rem;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.part {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--text);
+}
+.part .no {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+@media (prefers-color-scheme: dark) {
+  .part .no { color: #161518; }
+}
+.part h2 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--accent);
+}
+.item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  margin: 0 0 12px;
+}
+.item h3 {
+  font-size: 1.02rem;
+  line-height: 1.4;
+  margin: 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.item h3 a { color: var(--text); }
+.chip {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+.chip.alert {
+  background: var(--alert-bg);
+  color: var(--alert);
+}
+.row {
+  display: grid;
+  grid-template-columns: 6.2em 1fr;
+  gap: 6px 8px;
+  align-items: baseline;
+  margin: 0 0 6px;
+}
+.row:last-child { margin-bottom: 0; }
+.row b {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+.row span { margin: 0; }
+a { color: var(--accent); }
+.cmp {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 8px;
+}
+.cmp-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+.cmp-card.alert {
+  border-color: var(--alert);
+}
+.cmp-card h3 {
+  font-size: 0.98rem;
+  margin: 0 0 8px;
+}
+.cmp-card dl { margin: 0; }
+.cmp-card .kv {
+  display: grid;
+  grid-template-columns: 4.6em 1fr;
+  gap: 4px 8px;
+  align-items: baseline;
+  margin: 0 0 4px;
+}
+.cmp-card .kv:last-child { margin-bottom: 0; }
+.cmp-card dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0;
+}
+.cmp-card dd { margin: 0; }
+.foot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 24px 0 0;
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>AIイベント 早わかり（11/21）</h1>
+  <p class="lead">行く価値ありは3件です。いちばん締切が近いのは12/4の秘書・パーソナルエージェントLT会で、登壇希望の締切は11/24（火）10:00です。</p>
+
+  <div class="part"><span class="no">1</span><h2>行く価値ありの3件</h2></div>
+
+  <article class="item">
+    <h3><a href="https://aid.connpass.com/event/413796/">秘書・パーソナルエージェント活用事例LT会</a> <span class="chip">行く価値あり</span> <span class="chip alert">登壇締切 11/24 10:00</span></h3>
+    <div class="row"><b>できること</b><span>12/4（金）19:00〜21:00、新御茶ノ水駅直結の会場で、秘書型AIの活用事例を5分ずつ聞ける無料のLT会です（懇親会あり）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>日ごろ動かしているBotや秘書型AIの使い方を5分で発表すれば、自動化の実績になります。</span></div>
+  </article>
+
+  <article class="item">
+    <h3><a href="https://mercari.connpass.com/event/411234/">Remote Agent Battle</a> <span class="chip">行く価値あり</span></h3>
+    <div class="row"><b>できること</b><span>12/15（火）19:00〜21:30、メルカリ東京オフィスで、AIエージェントを遠隔で動かす土台の話を聞く無料の対面イベントです（懇親会・軽食あり）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>Botの運用とネットワークの仕事の両方に効く、実行基盤の考え方が手に入ります。</span></div>
+  </article>
+
+  <article class="item">
+    <h3><a href="https://jawsug.connpass.com/event/401200/">JAWS-UG Presents - AI Builders Day 2026</a> <span class="chip">行く価値あり</span></h3>
+    <div class="row"><b>できること</b><span>12/19（土）12:30〜18:00、AWS Japan 麻布台オフィスで、AIで作る人向けの無料の学習会です（現地のみ）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>土曜に行きやすく、同じ関心の人とつながって作品づくりのヒントを得られます。</span></div>
+  </article>
+
+  <div class="part"><span class="no">2</span><h2>3件の比較</h2></div>
+
+  <div class="cmp">
+    <div class="cmp-card alert">
+      <h3>秘書・パーソナルエージェントLT会</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/4（金）19:00〜21:00（懇親会は22:00まで）</dd></div>
+        <div class="kv"><dt>場所</dt><dd>燈株式会社（御茶ノ水ソラシティ21F）</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>新御茶ノ水駅 直結</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料</dd></div>
+        <div class="kv"><dt>締切</dt><dd>11/24（火）10:00（登壇希望）</dd></div>
+        <div class="kv"><dt>空き</dt><dd>登壇希望 5／15人（11/21 時点）</dd></div>
+      </dl>
+    </div>
+    <div class="cmp-card">
+      <h3>Remote Agent Battle</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/15（火）19:00〜21:30</dd></div>
+        <div class="kv"><dt>場所</dt><dd>メルカリ 東京オフィス（六本木ヒルズ森タワー）</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>（未確認）</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料</dd></div>
+        <div class="kv"><dt>締切</dt><dd>12/11（金）10:00</dd></div>
+        <div class="kv"><dt>空き</dt><dd>121／150人（11/21 時点）</dd></div>
+      </dl>
+    </div>
+    <div class="cmp-card">
+      <h3>AI Builders Day 2026</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/19（土）12:30〜18:00</dd></div>
+        <div class="kv"><dt>場所</dt><dd>AWS Japan 麻布台オフィス（35F・36F）</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>六本木一丁目駅・神谷町駅から地下道で直結</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料</dd></div>
+        <div class="kv"><dt>締切</dt><dd>12/16（水）19:00</dd></div>
+        <div class="kv"><dt>空き</dt><dd>223／400人（11/21 時点）</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="part"><span class="no">3</span><h2>次にやること</h2></div>
+
+  <article class="item">
+    <h3>登壇したいなら11/24まで</h3>
+    <div class="row"><b>できること</b><span>LT会の登壇希望は11/24（火）10:00が締切で、選考結果は11/25（水）に届きます。</span></div>
+    <div class="row"><b>社長の用途で</b><span>5分の発表は、自動化とAIの実績として残ります。</span></div>
+  </article>
+
+  <article class="item">
+    <h3>聞くだけなら11/25から</h3>
+    <div class="row"><b>できること</b><span>聞くだけの一般参加は11/25（水）から申し込めます（先着40名）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>行きたいときだけ、各ページから申し込めば十分です。</span></div>
+  </article>
+
+  <p class="foot">出典: <a href="https://aid.connpass.com/event/413796/">connpass（秘書・パーソナルエージェントLT会）</a>、<a href="https://mercari.connpass.com/event/411234/">connpass（Remote Agent Battle）</a>、<a href="https://jawsug.connpass.com/event/401200/">connpass（JAWS-UG Presents - AI Builders Day 2026）</a>。人数は 2026-11-21 に各ページで確認しました。</p>
+</main>
+</body>
+</html>
