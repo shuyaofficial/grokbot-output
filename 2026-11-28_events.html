@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIイベント 早わかり（11/28）</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f6f4f1;
+  --card: #ffffff;
+  --text: #222222;
+  --muted: #5a5550;
+  --line: #e2dcd4;
+  --accent: #6b4f2f;
+  --ok: #23663f;
+  --ok-bg: #e5f3ea;
+  --alert: #8a3b12;
+  --alert-bg: #fbeee6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161518;
+    --card: #211f24;
+    --text: #efeae4;
+    --muted: #bdb6ad;
+    --line: #3a363e;
+    --accent: #e0c3a2;
+    --ok: #86d9a8;
+    --ok-bg: #1b2e25;
+    --alert: #f2b98f;
+    --alert-bg: #33241b;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+main {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  overflow-x: hidden;
+}
+h1 {
+  font-size: 1.35rem;
+  line-height: 1.35;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.part {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--text);
+}
+.part .no {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+@media (prefers-color-scheme: dark) {
+  .part .no { color: #161518; }
+}
+.part h2 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--accent);
+}
+.item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  margin: 0 0 12px;
+}
+.item h3 {
+  font-size: 1.02rem;
+  line-height: 1.4;
+  margin: 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.item h3 a { color: var(--text); }
+.chip {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 1px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+.chip.alert {
+  background: var(--alert-bg);
+  color: var(--alert);
+}
+.row {
+  display: grid;
+  grid-template-columns: 6.2em 1fr;
+  gap: 6px 8px;
+  align-items: baseline;
+  margin: 0 0 6px;
+}
+.row:last-child { margin-bottom: 0; }
+.row b {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+.row span { margin: 0; }
+a { color: var(--accent); }
+.cmp {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 8px;
+}
+.cmp-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px 14px;
+}
+.cmp-card.alert {
+  border-color: var(--alert);
+}
+.cmp-card h3 {
+  font-size: 0.98rem;
+  margin: 0 0 8px;
+}
+.cmp-card dl { margin: 0; }
+.cmp-card .kv {
+  display: grid;
+  grid-template-columns: 4.6em 1fr;
+  gap: 4px 8px;
+  align-items: baseline;
+  margin: 0 0 4px;
+}
+.cmp-card .kv:last-child { margin-bottom: 0; }
+.cmp-card dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0;
+}
+.cmp-card dd { margin: 0; }
+.foot {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 24px 0 0;
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>AIイベント 早わかり（11/28）</h1>
+  <p class="lead">行く価値ありは3件です。枠がいちばん少ないのは12/13のソロプレナーMeetupで、発表も聞くだけも先着10人です。</p>
+
+  <div class="part"><span class="no">1</span><h2>行く価値ありの3件</h2></div>
+
+  <article class="item">
+    <h3><a href="https://aid.connpass.com/event/412875/">Devin 2nd Anniversary Meetup Japan</a> <span class="chip">行く価値あり</span></h3>
+    <div class="row"><b>できること</b><span>12/9（水）19:20〜21:00、メルカリ（六本木ヒルズ森タワー26F）で、AIエンジニア「Devin」の使い方を聞く無料の会です（現地とオンライン、21:00から懇親会）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>Botに作業を任せる運用のヒントになり、自動化とAIの実績づくりに使えます。</span></div>
+  </article>
+
+  <article class="item">
+    <h3><a href="https://yuru-engineer.connpass.com/event/414468/">【恵比寿】ソロプレナーMeetup - LT＆座談会</a> <span class="chip">行く価値あり</span></h3>
+    <div class="row"><b>できること</b><span>12/13（日）15:00〜18:00、恵比寿ビジネスタワーで、1人でサービスを作る人の無料の交流会です（5分の発表か、聞くだけ）。</span></div>
+    <div class="row"><b>社長の用途で</b><span>資格問題集アプリの紹介を5分で話せば、個人開発の実績として残ります。</span></div>
+  </article>
+
+  <article class="item">
+    <h3><a href="https://aid.connpass.com/event/414144/">AIDDもくもく会（東京）#9</a> <span class="chip">行く価値あり</span></h3>
+    <div class="row"><b>できること</b><span>12/20（日）13:00〜17:30（説明では17:15まで）、新御茶ノ水駅直結の会場で、AIツールを使いながら作業し相談できる無料のもくもく会です。</span></div>
+    <div class="row"><b>社長の用途で</b><span>資格問題集アプリや自動化の作業をその場で進めながら、使い方の相談ができます。</span></div>
+  </article>
+
+  <div class="part"><span class="no">2</span><h2>3件の比較</h2></div>
+
+  <div class="cmp">
+    <div class="cmp-card">
+      <h3>Devin 2nd Anniversary Meetup Japan</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/9（水）19:20〜21:00（開場 18:50、懇親会は22:00まで）</dd></div>
+        <div class="kv"><dt>場所</dt><dd>メルカリ（六本木ヒルズ森タワー26F）</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>（未確認）</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料</dd></div>
+        <div class="kv"><dt>締切</dt><dd>12/9（水）21:00</dd></div>
+        <div class="kv"><dt>空き</dt><dd>現地参加 58／150人（11/28 時点）</dd></div>
+      </dl>
+    </div>
+    <div class="cmp-card alert">
+      <h3>ソロプレナーMeetup</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/13（日）15:00〜18:00（開場 14:50、途中参加・退出は原則不可）</dd></div>
+        <div class="kv"><dt>場所</dt><dd>恵比寿ビジネスタワー</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>JR恵比寿駅 徒歩2分、日比谷線 恵比寿駅 徒歩4分</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料（飲み物・お菓子は各自持参）</dd></div>
+        <div class="kv"><dt>締切</dt><dd>12/13（日）18:00</dd></div>
+        <div class="kv"><dt>空き</dt><dd>発表 1／10人・聞くだけ 1／10人（11/28 時点）</dd></div>
+      </dl>
+    </div>
+    <div class="cmp-card">
+      <h3>AIDDもくもく会（東京）#9</h3>
+      <dl>
+        <div class="kv"><dt>日時</dt><dd>12/20（日）13:00〜17:30</dd></div>
+        <div class="kv"><dt>場所</dt><dd>燈株式会社（御茶ノ水ソラシティ21階）</dd></div>
+        <div class="kv"><dt>最寄り駅</dt><dd>新御茶ノ水駅 直結（B2出口から徒歩約1分）、JR御茶ノ水駅 聖橋口 徒歩1分</dd></div>
+        <div class="kv"><dt>費用</dt><dd>無料</dd></div>
+        <div class="kv"><dt>締切</dt><dd>12/19（土）12:00</dd></div>
+        <div class="kv"><dt>空き</dt><dd>一般参加 14／60人（11/28 時点）</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="part"><span class="no">3</span><h2>次にやること</h2></div>
+
+  <article class="item">
+    <h3>枠が少ないソロプレナーMeetup</h3>
+    <div class="row"><b>できること</b><span>発表も聞くだけも先着10人で、11/28 時点で各1人が申し込んでいます。</span></div>
+    <div class="row"><b>社長の用途で</b><span>行きたいなら早めに申し込むと、席を取りこぼしにくいです。</span></div>
+  </article>
+
+  <article class="item">
+    <h3>行きたいときだけ申し込む</h3>
+    <div class="row"><b>できること</b><span>3件とも無料で、締切は12/9（水）21:00、12/13（日）18:00、12/19（土）12:00です。</span></div>
+    <div class="row"><b>社長の用途で</b><span>行きたいときだけ、各ページから申し込めば十分です。</span></div>
+  </article>
+
+  <p class="foot">出典: <a href="https://aid.connpass.com/event/412875/">connpass（Devin 2nd Anniversary Meetup Japan）</a>、<a href="https://yuru-engineer.connpass.com/event/414468/">connpass（ソロプレナーMeetup）</a>、<a href="https://aid.connpass.com/event/414144/">connpass（AIDDもくもく会 #9）</a>。人数は 2026-11-28 に各ページで確認しました。</p>
+</main>
+</body>
+</html>
